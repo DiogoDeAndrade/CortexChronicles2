@@ -102,7 +102,7 @@ namespace OpenTKBase
 
                         uint index = (uint)groundVertices.Count;
 
-                        var uvRect = GetUV(-1);
+                        var uvRect = GetGroundUV((((x * 3) + (y * 5)) % 8));
 
                         groundVertices.Add(centerPos + new Vector3(-tx, 0.0f, -tz)); groundNormals.Add(Vector3.UnitY); groundUV.Add(new Vector2(uvRect.X, uvRect.W));
                         groundVertices.Add(centerPos + new Vector3(-tx, 0.0f,  tz)); groundNormals.Add(Vector3.UnitY); groundUV.Add(new Vector2(uvRect.X, uvRect.Y));
@@ -113,6 +113,8 @@ namespace OpenTKBase
                         groundTriangles.Add(index); groundTriangles.Add(index + 2); groundTriangles.Add(index + 3);
 
                         index = (uint)groundVertices.Count;
+
+                        uvRect = GetGroundUV((((x * 7) + (y * 3)) % 8));
 
                         groundVertices.Add(centerPos + new Vector3(-tx, tileSizeY, -tz)); groundNormals.Add(Vector3.UnitY); groundUV.Add(new Vector2(uvRect.X, uvRect.W));
                         groundVertices.Add(centerPos + new Vector3(-tx, tileSizeY,  tz)); groundNormals.Add(Vector3.UnitY); groundUV.Add(new Vector2(uvRect.X, uvRect.Y));
@@ -157,7 +159,7 @@ namespace OpenTKBase
                         {
                             uint index = (uint)wallVertices.Count;
 
-                            var uvRect = GetUV(-1);
+                            var uvRect = GetWallUV((((x * 7) + (y * 3)) % 32));
 
                             wallVertices.Add(centerPos + new Vector3(-tx, 0.0f, -tz)); wallNormals.Add(Vector3.UnitX); wallUV.Add(new Vector2(uvRect.X, uvRect.W));
                             wallVertices.Add(centerPos + new Vector3(-tx, tileSizeY, -tz)); wallNormals.Add(Vector3.UnitX); wallUV.Add(new Vector2(uvRect.X, uvRect.Y));
@@ -171,7 +173,7 @@ namespace OpenTKBase
                         {
                             uint index = (uint)wallVertices.Count;
 
-                            var uvRect = GetUV(-1);
+                            var uvRect = GetWallUV((((x * 5) + (y * 3)) % 32));
 
                             wallVertices.Add(centerPos + new Vector3(tx, 0.0f, tz)); wallNormals.Add(-Vector3.UnitX); wallUV.Add(new Vector2(uvRect.X, uvRect.W));
                             wallVertices.Add(centerPos + new Vector3(tx, tileSizeY, tz)); wallNormals.Add(-Vector3.UnitX); wallUV.Add(new Vector2(uvRect.X, uvRect.Y));
@@ -185,7 +187,7 @@ namespace OpenTKBase
                         {
                             uint index = (uint)wallVertices.Count;
 
-                            var uvRect = GetUV(-1);
+                            var uvRect = GetWallUV((((x * 3) + (y * 5)) % 32));
 
                             wallVertices.Add(centerPos + new Vector3(-tx, 0.0f, tz)); wallNormals.Add(-Vector3.UnitZ); wallUV.Add(new Vector2(uvRect.X, uvRect.W));
                             wallVertices.Add(centerPos + new Vector3(-tx, tileSizeY, tz)); wallNormals.Add(-Vector3.UnitZ); wallUV.Add(new Vector2(uvRect.X, uvRect.Y));
@@ -199,7 +201,7 @@ namespace OpenTKBase
                         {
                             uint index = (uint)wallVertices.Count;
 
-                            var uvRect = GetUV(-1);
+                            var uvRect = GetWallUV((((x * 9) + (y * 5)) % 32));
 
                             wallVertices.Add(centerPos + new Vector3(tx, 0.0f, -tz)); wallNormals.Add(Vector3.UnitZ); wallUV.Add(new Vector2(uvRect.X, uvRect.W));
                             wallVertices.Add(centerPos + new Vector3(tx, tileSizeY, -tz)); wallNormals.Add(Vector3.UnitZ); wallUV.Add(new Vector2(uvRect.X, uvRect.Y));
@@ -232,8 +234,33 @@ namespace OpenTKBase
             return new Vector3(x * tileSizeX - sizeX * tileSizeX * 0.5f, 0.0f, y * tileSizeZ - sizeZ * tileSizeZ * 0.5f);
         }
 
-        Vector4 GetUV(int idx)
+        Vector4 GetGroundUV(int idx)
         {
+            if (idx > 0)
+            {
+                var ret = new Vector4(0.0f, 0.0f, 1.0f, 1.0f);
+                ret.X = (float)idx / 8.0f;
+                ret.Y = 0.0f;
+                ret.Z = ret.X + (float)1.0f / 8.0f;
+                ret.W = 1.0f;
+
+                return ret;
+            }
+            return new Vector4(0.0f, 0.0f, 1.0f, 1.0f);
+        }
+
+        Vector4 GetWallUV(int idx)
+        {
+            if (idx > 0)
+            {
+                var ret = new Vector4(0.0f, 0.0f, 1.0f, 1.0f);
+                ret.X = (float)idx / 32.0f;
+                ret.Y = 0.0f;
+                ret.Z = ret.X + (float)1.0f / 32.0f;
+                ret.W = 1.0f;
+
+                return ret;
+            }
             return new Vector4(0.0f, 0.0f, 1.0f, 1.0f);
         }
 
