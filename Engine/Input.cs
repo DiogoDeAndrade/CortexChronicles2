@@ -22,5 +22,10 @@ namespace OpenTKBase
             return window.KeyboardState.IsKeyDown(key);
         }
 
+        static public bool GetAnyKey()
+        {
+            return window.KeyboardState.IsAnyKeyDown;
+        }
+
     }
 }

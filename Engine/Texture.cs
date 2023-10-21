@@ -32,8 +32,20 @@ namespace OpenTKBase
 
         ~Texture()
         {
+            Clear();
+        }
+
+        public void Clear()
+        {
+            return;
             if (handle != -1)
             {
+                for (int i = 0; i < 8; i++)
+                {
+                    GL.ActiveTexture(TextureUnit.Texture0 + i);
+                    GL.BindTexture(TextureTarget.Texture2D, 0);
+                }
+
                 GL.DeleteTexture(handle);
                 handle = -1;
             }

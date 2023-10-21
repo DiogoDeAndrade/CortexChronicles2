@@ -11,6 +11,21 @@ namespace OpenTKBase
         static private Dictionary<string, Texture> _textures = new Dictionary<string, Texture>();
         static private Dictionary<string, Sprite>  _sprites = new Dictionary<string, Sprite>();
 
+        public static void Clear()
+        {
+            foreach (var texture in _textures.Values)
+            {
+                texture.Clear();
+            }
+            foreach (var sprite in _sprites.Values)
+            {
+                sprite.Clear();
+            }
+
+            _textures = new Dictionary<string, Texture>();
+            _sprites = new Dictionary<string, Sprite>();
+        }
+
         public static Texture LoadTexture(string textureFilename, TextureWrapMode wrapMode = TextureWrapMode.Repeat, TextureMinFilter filter = TextureMinFilter.Linear, bool mips = true)
         {
             Texture texture = new Texture(wrapMode, filter, false);

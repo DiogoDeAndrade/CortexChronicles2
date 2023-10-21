@@ -18,6 +18,7 @@ namespace OpenTKBase
         public  int         resY { private set; get; }
         private string      title = "Test App";
         private bool        debug = false;
+        private Action      initAction = null;
         private Action      runAction = null;
         private GameWindow  window = null;
         private Scene       _mainScene = null;
@@ -93,10 +94,23 @@ namespace OpenTKBase
         {
         }
 
-
-        public void Run(Action mainLoopFunction)
+        public void Restart()
         {
+            // Clear everything and initialize everything again
+            Resources.Clear();
+
+            _mainScene = new Scene();
+
+            initAction();
+        }
+
+
+        public void Run(Action initFunction, Action mainLoopFunction)
+        {
+            initAction = initFunction;
             runAction = mainLoopFunction;
+
+            initAction();
 
             window?.Run();
         }

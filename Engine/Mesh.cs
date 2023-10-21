@@ -1,4 +1,5 @@
 ﻿
+using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using OpenTK.Graphics.OpenGL;
@@ -36,14 +37,22 @@ namespace OpenTKBase
 
         ~Mesh()
         {
+            Clear();
+        }
+
+        public void Clear()
+        {
+            return;
             if (vbo != -1)
             {
+                Console.WriteLine("Destroy VBO = " + vbo);
                 GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
                 GL.DeleteBuffer(vbo);
                 vbo = -1;
             }
             if (ibo != -1)
             {
+                Console.WriteLine("Destroy IBO = " + ibo);
                 GL.BindBuffer(BufferTarget.ElementArrayBuffer, 0);
                 GL.DeleteBuffer(ibo);
                 ibo = -1;
@@ -268,6 +277,8 @@ namespace OpenTKBase
         {
             if (vbo != -1)
             {
+                Console.WriteLine("Destroy VBO = " + vbo);
+
                 // Guarantee that this buffer is not in use
                 GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
                 GL.DeleteBuffer(vbo);
@@ -291,6 +302,8 @@ namespace OpenTKBase
             GL.BufferData(BufferTarget.ArrayBuffer, VertexData.SizeInBytes * vertices.Count, marshallData, BufferUsageHint.StaticDraw);
 
             vertexDirty = false;
+
+            Console.WriteLine("Created VBO = " + vbo);
         }
         public void UpdateIndex()
         {

@@ -18,6 +18,16 @@ namespace OpenTKBase
             properties = new Dictionary<string, object>();
         }
 
+        ~Material()
+        {
+            Clear();
+        }
+
+        public void Clear()
+        {
+        }
+
+
         public void Set(string name, object value)
         {
             properties[name] = value;

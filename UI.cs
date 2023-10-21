@@ -14,6 +14,17 @@ namespace OpenTKBase
 
         private Material ssmaterial;
 
+        public override void Update()
+        {
+            if (state == State.GameOver)
+            {
+                if (Input.GetAnyKey())
+                {
+                    OpenTKApp.APP.Restart();
+                }
+            }
+        }
+
         public override void Render(Camera camera, Material material)
         {
             if (state == State.GameOver)
