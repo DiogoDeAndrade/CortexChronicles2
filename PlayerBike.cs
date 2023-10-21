@@ -9,6 +9,7 @@ namespace OpenTKBase
         private float           rightDir = 0.0f;
         private float           rightInc = 10.0f;
         private float           rightDamp = 0.95f;
+        private Vector3         bikeSpeed = new Vector3(10.0f, 0.0f, 2.0f);
         private SpriteRenderer  spriteRenderer;
 
         public override void Start()
@@ -34,7 +35,12 @@ namespace OpenTKBase
 
             spriteRenderer.rotation = -20 * rightDir;
 
-            transform.position += transform.forward * 1.0f * Time.timeDeltaTime;
+            Vector3 newPos = transform.position;
+            
+            newPos += transform.forward * bikeSpeed.Z * Time.timeDeltaTime;
+            newPos += transform.right * rightDir * bikeSpeed.X * Time.timeDeltaTime;
+
+            transform.position = newPos;
         }
     }
 }

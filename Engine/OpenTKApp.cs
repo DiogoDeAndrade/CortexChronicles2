@@ -6,6 +6,7 @@ using OpenTK.Windowing.Common.Input;
 using OpenTK.Windowing.Desktop;
 using OpenTK.Windowing.GraphicsLibraryFramework;
 using System;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
 
 namespace OpenTKBase
@@ -22,7 +23,7 @@ namespace OpenTKBase
         private float       _timeDeltaTime = 0.0f;
         private float       _time = 0.0f;
         private Vector3     _mouseDelta;
-        private int         _timeSinceLastUpdate;
+        private long        _timeSinceLastUpdate;
 
         private bool    exit = false;
 
@@ -82,7 +83,7 @@ namespace OpenTKBase
 
             _mainScene = new Scene();
 
-            _timeSinceLastUpdate = System.Environment.TickCount;
+            _timeSinceLastUpdate = Stopwatch.GetTimestamp();
 
             return true;
         }
@@ -96,24 +97,12 @@ namespace OpenTKBase
         {
             runAction = mainLoopFunction;
 
-            while ((Component.needToAwake) ||
-                   (Component.needToStart))
-            {
-                Component.AwakeAll();
-                Component.StartAll();
-            }
-
             window?.Run();
         }
 
         public void Render(RenderPipeline rp)
         {
             rp.Render(mainScene);
-        }
-
-        public bool GetKey(Keys key)
-        {
-            return window.KeyboardState.IsKeyDown(key);
         }
 
         public Vector3 GetMouseDelta()
@@ -128,6 +117,11 @@ namespace OpenTKBase
 
         private void OnUpdateFrame(FrameEventArgs e)
         {
+            RunUpdate();
+        }
+
+        void RunUpdate()
+        { 
             if (window == null) return;
 
             if (((window.KeyboardState.IsKeyDown(Keys.Escape)) && (window.KeyboardState.IsKeyDown(Keys.LeftShift))) || (exit))
@@ -136,10 +130,19 @@ namespace OpenTKBase
                 return;
             }
 
-            _timeDeltaTime = (Environment.TickCount - _timeSinceLastUpdate) / 1000.0f;
+            long    timestamp = Stopwatch.GetTimestamp();
+            
+            _timeDeltaTime = (float)(timestamp - _timeSinceLastUpdate) / Stopwatch.Frequency;            
             _time += _timeDeltaTime;
             Time.SetTimeParams(_time, _timeDeltaTime);
-            _timeSinceLastUpdate = Environment.TickCount;
+            _timeSinceLastUpdate = timestamp;
+
+            while ((Component.needToAwake) ||
+                   (Component.needToStart))
+            {
+                Component.AwakeAll();
+                Component.StartAll();
+            }
 
             var tmp = window.MouseState.Delta;
             _mouseDelta = new Vector3(tmp.X, tmp.Y, window.MouseState.ScrollDelta.Y);

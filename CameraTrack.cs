@@ -29,7 +29,7 @@ namespace OpenTKBase
             Quaternion currentRotation = transform.rotation;
             Quaternion targetRotation = LookRotation(dir, Vector3.UnitY);
 
-            transform.rotation = Quaternion.Slerp(currentRotation, targetRotation, followSpeed);
+            //transform.rotation = Quaternion.Slerp(currentRotation, targetRotation, followSpeed);
         }
 
         public static Quaternion LookRotation(Vector3 forward, Vector3 up)

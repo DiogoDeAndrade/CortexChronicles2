@@ -211,7 +211,7 @@ namespace SDLBase
             GameObject cameraObject = new GameObject();
             Camera camera = cameraObject.AddComponent<Camera>();
             camera.transform.position = startPos + Vector3.UnitY * 2.5f - Vector3.UnitX * 5;
-            camera.transform.rotation = Quaternion.FromEulerAngles(0.0f, MathF.PI / 2.0f, 0.0f);
+            camera.transform.rotation = Quaternion.FromEulerAngles(0.0f, -MathF.PI / 2.0f, 0.0f);
             camera.ortographic = false;
             var track = cameraObject.AddComponent<CameraTrack>();
             track.player = pb;
