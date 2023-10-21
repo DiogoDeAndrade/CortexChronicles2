@@ -12,13 +12,13 @@ namespace OpenTKBase
 
         public State state = State.None;
 
-        private Material ssmaterial;
+        private Material    ssmaterial;
 
         public override void Update()
         {
             if (state == State.GameOver)
             {
-                if (Input.GetAnyKey())
+                if (Input.GetKeyDown(Keys.Space))
                 {
                     OpenTKApp.APP.Restart();
                 }
