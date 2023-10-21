@@ -91,6 +91,8 @@ namespace OpenTKBase
                         GameObject playerExplosion = new GameObject();
                         playerExplosion.transform.position = transform.position + Vector3.UnitY * 1.5f;
                         playerExplosion.AddComponent<Explosion>();
+
+                        FindObjectOfType<UI>().state = UI.State.GameOver;
                     }
                 }
             }

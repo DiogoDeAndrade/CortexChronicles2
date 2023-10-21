@@ -40,7 +40,6 @@ namespace OpenTKBase
             Mesh mesh = sprite.GetMesh();
 
             mesh.Render(activeMaterial);
-
         }
     }
 }

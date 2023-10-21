@@ -33,7 +33,8 @@ namespace OpenTKBase
                                 Material, Environment, Texture, EnvTexture, 
                                 Matrix, 
                                 ViewPos, ViewDir, ViewUp, ViewRight,
-                                HasTexture
+                                HasTexture,
+                                Resolution
             };
 
             public Type                 type;
@@ -320,6 +321,9 @@ namespace OpenTKBase
                             var viewRight = (Vector4.UnitX * viewMatrix).Xyz;
                             GL.Uniform3(u.slot, viewRight);
                             break;
+                        case Uniform.Type.Resolution:
+                            GL.Uniform2(u.slot, new Vector2(OpenTKApp.APP.resX, OpenTKApp.APP.resY));
+                            break;
                         default:
                             Console.Write($"Unhandled type of constant {u.type}!\n");
                             break;
@@ -498,6 +502,7 @@ namespace OpenTKBase
                 else if (uniformName == "ViewDir") uniforms.Add(new Uniform() { type = Uniform.Type.ViewDir, name = uniformName, slot = location, dataSize = size, dataType = type });
                 else if (uniformName == "ViewUp") uniforms.Add(new Uniform() { type = Uniform.Type.ViewUp, name = uniformName, slot = location, dataSize = size, dataType = type });
                 else if (uniformName == "ViewRight") uniforms.Add(new Uniform() { type = Uniform.Type.ViewRight, name = uniformName, slot = location, dataSize = size, dataType = type });
+                else if (uniformName == "Resolution") uniforms.Add(new Uniform() { type = Uniform.Type.Resolution, name = uniformName, slot = location, dataSize = size, dataType = type });
                 else
                 {
                     Console.WriteLine($"Can't parse uniform {uniformName} in shader {name}!");

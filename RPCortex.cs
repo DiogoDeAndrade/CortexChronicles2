@@ -35,6 +35,8 @@ namespace OpenTKBase
                 Shader.SetMatrix(Shader.MatrixType.InvCamera, camera.transform.localToWorldMatrix);
                 Shader.SetMatrix(Shader.MatrixType.Projection, camera.projection);
 
+                allRender.Sort((r1, r2) => r1.GetOrder().CompareTo(r2.GetOrder()));
+
                 foreach (var render in allRender)
                 {
                     if (!render.enable) continue;

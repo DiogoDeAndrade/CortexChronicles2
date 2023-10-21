@@ -202,6 +202,8 @@ namespace SDLBase
             Resources.CreateSpriteForPixelArt("dot", "Textures/dot.png", new Vector2(0.5f, 0.5f), new Vector4(0.0f, 0.0f, 1.0f, 1.0f), 90);
             Resources.CreateSpriteSheetForPixelArt("explosion", "Textures/explosion.png", new Vector2(0.5f, 0.5f), 4, 4, 16, 90);
 
+            Resources.CreateSpriteForPixelArt("GameOver", "Textures/gameover.png", new Vector2(0.5f, 0.5f), new Vector4(0.0f, 0.0f, 1.0f, 1.0f), 90);
+
             GameObject playerCharacter = new GameObject();
             playerCharacter.transform.position = startPos;
             playerCharacter.transform.rotation = Quaternion.FromEulerAngles(0.0f, -MathF.PI / 2.0f, 0.0f);
@@ -221,6 +223,9 @@ namespace SDLBase
             track.gameMap = gameMap;
             //FirstPersonController fps = cameraObject.AddComponent<FirstPersonController>();
             //fps.rotation = new Vector2(0.0f, -MathF.PI / 2.0f);
+
+            GameObject uiObject = new GameObject();
+            uiObject.AddComponent<UI>();
 
             // Create pipeline
             RPCortex renderPipeline = new RPCortex();
