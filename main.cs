@@ -211,7 +211,7 @@ namespace SDLBase
 
             GameObject playerCharacter = new GameObject();
             playerCharacter.transform.position = startPos;
-            playerCharacter.transform.rotation = Quaternion.FromEulerAngles(0.0f, MathF.PI / 2.0f, 0.0f);
+            playerCharacter.transform.rotation = Quaternion.FromEulerAngles(0.0f, -MathF.PI / 2.0f, 0.0f);
             SpriteRenderer sr = playerCharacter.AddComponent<SpriteRenderer>();
             sr.sprite = player_sprite;
             playerCharacter.AddComponent<PlayerBike>();

@@ -34,7 +34,7 @@ namespace OpenTKBase
 
             spriteRenderer.rotation = -20 * rightDir;
 
-            transform.rotation = Quaternion.FromEulerAngles(0.0f, Time.time * MathF.PI / 2.0f, 0.0f);
+            transform.position += transform.forward * 1.0f * Time.timeDeltaTime;
         }
     }
 }
