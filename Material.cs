@@ -10,6 +10,7 @@ namespace OpenTKBase
     {
         public Shader                       shader;
         public Dictionary<string, object>   properties;
+        public CullFaceMode                 cullMode = CullFaceMode.Back;
 
         public Material(Shader shader)
         {

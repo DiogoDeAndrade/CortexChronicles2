@@ -18,6 +18,8 @@ void main()
     fogFactor = floor(fogFactor * 4)/4.0;
 
     vec4 textureColor = texture(TextureAlbedo, fragUV);
+    if (textureColor.a < 0.005)
+        discard;
 
     FragColor =  mix(textureColor, EnvFogColor, fogFactor);
     FragColor.a =  textureColor.a;

@@ -206,11 +206,18 @@ namespace SDLBase
             // Create player character
             var motorbike_texture = Resources.LoadTexture("Textures/motorbike.png", OpenTK.Graphics.OpenGL.TextureWrapMode.Clamp, OpenTK.Graphics.OpenGL.TextureMinFilter.Nearest, false);
             var player_sprite = Resources.CreateSprite("bike", motorbike_texture, new Vector2(0.5f, 1.0f), new Vector4(0.0f, 0.0f, 1.0f, 1.0f), 90);
+            var shadow_texture = Resources.LoadTexture("Textures/shadow.png", OpenTK.Graphics.OpenGL.TextureWrapMode.Clamp, OpenTK.Graphics.OpenGL.TextureMinFilter.Nearest, false);
+            var shadow_sprite = Resources.CreateSprite("shadow", shadow_texture, new Vector2(0.5f, 0.5f), new Vector4(0.0f, 0.0f, 1.0f, 1.0f), 90, false);
 
             GameObject playerCharacter = new GameObject();
             playerCharacter.transform.position = startPos;
             SpriteRenderer sr = playerCharacter.AddComponent<SpriteRenderer>();
             sr.sprite = player_sprite;
+            GameObject playerShadow = new GameObject();
+            playerShadow.transform.position = startPos + Vector3.UnitX * 0.5f + Vector3.UnitY * 0.1f;
+            playerShadow.transform.SetParent(playerCharacter.transform);
+            sr = playerShadow.AddComponent<SpriteRenderer>();
+            sr.sprite = shadow_sprite;
 
             // Create pipeline
             RPCortex renderPipeline = new RPCortex();

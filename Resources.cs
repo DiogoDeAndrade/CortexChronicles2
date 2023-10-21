@@ -21,14 +21,15 @@ namespace OpenTKBase
             return texture;
         }
 
-        public static Sprite CreateSprite(string name, Texture texture, Vector2 hotspot, Vector4 uvRect, int pixelsPerUnit)
+        public static Sprite CreateSprite(string name, Texture texture, Vector2 hotspot, Vector4 uvRect, int pixelsPerUnit, bool billboardSprite = true)
         {
             Sprite sprite = new Sprite()
             {
                 texture = texture,
                 hotspot = hotspot,
                 uvRect = uvRect,
-                pixelsPerUnit = pixelsPerUnit
+                pixelsPerUnit = pixelsPerUnit,
+                billboardSprite = billboardSprite
             };
 
             _sprites.Add(name, sprite);

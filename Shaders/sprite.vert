@@ -4,6 +4,7 @@ layout (location = 1) in vec2 uv;
 
 uniform mat4        MatrixClip;
 uniform mat4        MatrixWorld;
+uniform vec3        ViewDir;
 uniform vec3        ViewUp;
 uniform vec3        ViewRight;
 
@@ -13,7 +14,7 @@ out vec2 fragUV;
 void main()
 {
     // Get world position
-    vec3 actualPos = ViewRight * position.x + ViewUp * position.y;
+    vec3 actualPos = ViewRight * position.x + ViewUp * position.y + ViewDir * position.z;
     fragWorldPos = (MatrixWorld * vec4(actualPos, 1.0)).xyz; 
     fragUV = uv;
     gl_Position = MatrixClip * vec4(actualPos, 1.0);

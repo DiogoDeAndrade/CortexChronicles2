@@ -14,6 +14,7 @@ namespace OpenTKBase
             var allRender = scene.FindObjectsOfType<Renderable>();
 
             // Restore cull mode to normal
+            //GL.Disable(EnableCap.CullFace);
             GL.Enable(EnableCap.CullFace);
             GL.CullFace(CullFaceMode.Back);
 

@@ -236,7 +236,7 @@ namespace OpenTKBase
 
         Vector4 GetGroundUV(int idx)
         {
-            if (idx > 0)
+            if (idx >= 0)
             {
                 var ret = new Vector4(0.0f, 0.0f, 1.0f, 1.0f);
                 ret.X = (float)idx / 8.0f;
@@ -251,7 +251,7 @@ namespace OpenTKBase
 
         Vector4 GetWallUV(int idx)
         {
-            if (idx > 0)
+            if (idx >= 0)
             {
                 var ret = new Vector4(0.0f, 0.0f, 1.0f, 1.0f);
                 ret.X = (float)idx / 32.0f;

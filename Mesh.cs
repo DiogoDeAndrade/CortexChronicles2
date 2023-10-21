@@ -238,6 +238,17 @@ namespace OpenTKBase
             // Setup shader
             shader.Set(material);
 
+            // Set cull
+            if (material.cullMode != CullFaceMode.FrontAndBack)
+            {
+                GL.Enable(EnableCap.CullFace);
+                GL.CullFace(material.cullMode);
+            }
+            else
+            {
+                GL.Disable(EnableCap.CullFace);
+            }
+
             // Render
             if (indices == null)
             {
