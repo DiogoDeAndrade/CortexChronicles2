@@ -44,16 +44,12 @@ namespace OpenTKBase
         {
             if (vbo != -1)
             {
-                Console.WriteLine("Destroy VBO = " + vbo);
-                GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
-                GL.DeleteBuffer(vbo);
+                OpenTKApp.AddToGfxQueue(OpenTKApp.GfxOp.DeleteVbo, vbo);
                 vbo = -1;
             }
             if (ibo != -1)
             {
-                Console.WriteLine("Destroy IBO = " + ibo);
-                GL.BindBuffer(BufferTarget.ElementArrayBuffer, 0);
-                GL.DeleteBuffer(ibo);
+                OpenTKApp.AddToGfxQueue(OpenTKApp.GfxOp.DeleteIbo, ibo);
                 ibo = -1;
             }
         }

@@ -9,6 +9,8 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
+using static OpenTK.Graphics.OpenGL.GL;
+using static OpenTKBase.OpenTKApp;
 
 namespace OpenTKBase
 {
@@ -134,12 +136,21 @@ namespace OpenTKBase
         void RunUpdate()
         { 
             if (window == null) return;
-            if (_restart) return;
-            if (_reset)
+            if (_restart)
             {
-                _reset = false;
+                _reset = true;
+                // Clear everything and initialize everything again
+                Resources.Clear();
+
+                _mainScene = new Scene();
+
+                initAction();
+
+                _restart = false;
+
                 return;
             }
+            if (_reset) return;
 
             if (((window.KeyboardState.IsKeyDown(Keys.Escape)) && (window.KeyboardState.IsKeyDown(Keys.LeftShift))) || (exit))
             {
@@ -188,23 +199,16 @@ namespace OpenTKBase
 
         private void OnRender(FrameEventArgs e)
         {
-            if (_restart)
+            if (window == null) return;
+
+            ExecuteQueue();
+
+            if (_restart) return;
+            if (_reset)
             {
-                _reset = true;
-                // Clear everything and initialize everything again
-                Resources.Clear();
-
-                _mainScene = new Scene();
-
-                initAction();
-
-                _restart = false;
-
+                _reset = false;
                 return;
             }
-            if (_reset) return;
-
-            if (window == null) return;
 
             runAction?.Invoke();
 
@@ -235,6 +239,56 @@ namespace OpenTKBase
             {
                 throw new Exception(message);
             }
+        }
+
+        public enum GfxOp { DeleteVbo, DeleteIbo, DeleteTexture };
+        struct GfxQueueElem
+        {
+            public GfxOp    op;
+            public int      handle;
+
+            public void Execute()
+            {
+                switch (op)
+                {
+                    case GfxOp.DeleteVbo:
+                        Console.WriteLine("Destroy VBO = " + handle);
+
+                        GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
+                        GL.DeleteBuffer(handle);
+                        break;
+                    case GfxOp.DeleteIbo:
+                        Console.WriteLine("Destroy IBO = " + handle);
+                        GL.BindBuffer(BufferTarget.ElementArrayBuffer, 0);
+                        GL.DeleteBuffer(handle);
+                        break;
+                    case GfxOp.DeleteTexture:
+                        for (int i = 0; i < 8; i++)
+                        {
+                            GL.ActiveTexture(TextureUnit.Texture0 + i);
+                            GL.BindTexture(TextureTarget.Texture2D, 0);
+                        }
+                        GL.DeleteTexture(handle);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+        static List<GfxQueueElem> gfxQueue = new List<GfxQueueElem>();
+
+        static public void AddToGfxQueue(GfxOp op, int handle)
+        {
+            gfxQueue.Add(new GfxQueueElem { op = op, handle = handle });
+        }
+        
+        private void ExecuteQueue()
+        {
+            foreach (var o in gfxQueue)
+            {
+                o.Execute();
+            }
+            gfxQueue.Clear();
         }
     }
 }
