@@ -20,6 +20,7 @@ namespace OpenTKBase
         private GameWindow  window = null;
         private Scene       _mainScene = null;
         private float       _timeDeltaTime = 0.0f;
+        private float       _time = 0.0f;
         private Vector3     _mouseDelta;
         private int         _timeSinceLastUpdate;
 
@@ -136,7 +137,8 @@ namespace OpenTKBase
             }
 
             _timeDeltaTime = (Environment.TickCount - _timeSinceLastUpdate) / 1000.0f;
-            Time.SetTime(_timeDeltaTime);
+            _time += _timeDeltaTime;
+            Time.SetTimeParams(_time, _timeDeltaTime);
             _timeSinceLastUpdate = Environment.TickCount;
 
             var tmp = window.MouseState.Delta;

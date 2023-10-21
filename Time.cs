@@ -9,11 +9,14 @@ namespace OpenTKBase
     public static class Time
     {
         static private float _timeDeltaTime;
+        static private float _time;
         static public float timeDeltaTime => _timeDeltaTime;
+        static public float time => _time;
 
-        static public void SetTime(float timeDeltaTime)
+        static public void SetTimeParams(float time, float timeDeltaTime)
         {
             Time._timeDeltaTime = timeDeltaTime;
+            Time._time = time;
         }
 
     }

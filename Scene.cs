@@ -48,5 +48,16 @@ namespace OpenTKBase
         }
 
         public List<GameObject> GetAllObjects() => objects;
+
+        public T FindObjectOfType<T>() where T : Component
+        {
+            foreach (GameObject go in objects)
+            {
+                T c = go.GetComponent<T>();
+                if (c != null) return c;
+            }
+
+            return null;
+        }
     }
 }

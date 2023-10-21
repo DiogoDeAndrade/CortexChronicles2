@@ -13,13 +13,16 @@ namespace OpenTKBase
 
         public override void Start()
         {
+            spriteRenderer = GetComponent<SpriteRenderer>();
+            spriteRenderer.mode = SpriteRenderer.Mode.World;
+
             GameObject playerShadow = new GameObject();
-            playerShadow.transform.position = transform.position + Vector3.UnitY * 0.1f;
             playerShadow.transform.SetParent(transform);
+            playerShadow.transform.localPosition = Vector3.UnitY * 0.1f;
+            playerShadow.transform.localRotation = Quaternion.FromEulerAngles(MathF.PI * 0.5f, 0.0f, 0.0f);
             var sr = playerShadow.AddComponent<SpriteRenderer>();
             sr.sprite = Resources.FindSprite("bike_shadow");
-
-            spriteRenderer = GetComponent<SpriteRenderer>();
+            sr.mode = SpriteRenderer.Mode.World;
         }
 
         public override void Update()
@@ -30,6 +33,8 @@ namespace OpenTKBase
             rightDir = MathF.Min(1, MathF.Max(-1.0f, rightDir));
 
             spriteRenderer.rotation = -20 * rightDir;
+
+            transform.rotation = Quaternion.FromEulerAngles(0.0f, Time.time * MathF.PI / 2.0f, 0.0f);
         }
     }
 }

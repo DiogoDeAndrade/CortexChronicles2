@@ -4,11 +4,12 @@ layout (location = 1) in vec2 uv;
 
 uniform mat4        MatrixClip;
 uniform mat4        MatrixWorld;
-uniform vec3        ViewDir;
-uniform vec3        ViewUp;
+uniform vec3        SpriteRight;
+uniform vec3        SpriteUp;
 uniform vec3        ViewRight;
 uniform float       MaterialSpriteRotation;
-uniform bool        MaterialBillboardSprite;
+uniform vec3        MaterialSpriteRight;
+uniform vec3        MaterialSpriteUp;
 
 out vec3 fragWorldPos;
 out vec2 fragUV;
@@ -22,20 +23,11 @@ void main()
     float c = cos(MaterialSpriteRotation);
     float x = actualPos.x;
     float y = actualPos.y;
-    float z = actualPos.z;
 
-    if (MaterialBillboardSprite)
-    {
-        actualPos.x = x * c - y * s;
-        actualPos.y = x * s + y * c;
-    }
-    else
-    {
-        actualPos.x = x * c - z * s;
-        actualPos.z = x * s + z * c;
-    }
+    actualPos.x = x * c - y * s;
+    actualPos.y = x * s + y * c;
 
-    actualPos = ViewRight * actualPos.x + ViewUp * actualPos.y + ViewDir * actualPos.z;
+    actualPos = MaterialSpriteRight * actualPos.x + MaterialSpriteUp * actualPos.y;
 
     fragWorldPos = (MatrixWorld * vec4(actualPos, 1.0)).xyz; 
     fragUV = uv;

@@ -207,10 +207,11 @@ namespace SDLBase
             var motorbike_texture = Resources.LoadTexture("Textures/motorbike.png", OpenTK.Graphics.OpenGL.TextureWrapMode.Clamp, OpenTK.Graphics.OpenGL.TextureMinFilter.Nearest, false);
             var player_sprite = Resources.CreateSprite("bike", motorbike_texture, new Vector2(0.5f, 1.0f), new Vector4(0.0f, 0.0f, 1.0f, 1.0f), 90);
             var shadow_texture = Resources.LoadTexture("Textures/shadow.png", OpenTK.Graphics.OpenGL.TextureWrapMode.Clamp, OpenTK.Graphics.OpenGL.TextureMinFilter.Nearest, false);
-            var shadow_sprite = Resources.CreateSprite("bike_shadow", shadow_texture, new Vector2(0.5f, 0.5f), new Vector4(0.0f, 0.0f, 1.0f, 1.0f), 90, false);
+            var shadow_sprite = Resources.CreateSprite("bike_shadow", shadow_texture, new Vector2(0.5f, 0.5f), new Vector4(0.0f, 0.0f, 1.0f, 1.0f), 90);
 
             GameObject playerCharacter = new GameObject();
             playerCharacter.transform.position = startPos;
+            playerCharacter.transform.rotation = Quaternion.FromEulerAngles(0.0f, MathF.PI / 2.0f, 0.0f);
             SpriteRenderer sr = playerCharacter.AddComponent<SpriteRenderer>();
             sr.sprite = player_sprite;
             playerCharacter.AddComponent<PlayerBike>();

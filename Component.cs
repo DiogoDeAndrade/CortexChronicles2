@@ -53,5 +53,11 @@ namespace OpenTKBase
         public virtual void Awake() { }
         public virtual void Start() { }
         public virtual void Update() { }
+
+        static public T FindObjectOfType<T>() where T : Component
+        {
+            var scene = OpenTKApp.APP.mainScene;
+            return scene.FindObjectOfType<T>();
+        }
     }
 }

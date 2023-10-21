@@ -10,7 +10,6 @@ namespace OpenTKBase
         public Vector2  hotspot;
         public Vector4  uvRect;
         public float    pixelsPerUnit = 100.0f;
-        public bool     billboardSprite = true;
 
         private Mesh        mesh;
         private Material    material;
@@ -33,13 +32,6 @@ namespace OpenTKBase
                 float u2 = uvRect.Z;
                 float v2 = uvRect.W;
 
-                if (!billboardSprite)
-                {
-                    axisY = Vector3.UnitZ;
-                    v1 = uvRect.W;
-                    v2 = uvRect.Y;
-                }
-
                 mesh = new Mesh();
                 mesh.SetVertices(new List<Vector3> {
                     axisX * x + axisY * (y - height),
@@ -61,7 +53,7 @@ namespace OpenTKBase
             {
                 material = new Material(Shader.Find("Shaders/sprite"));
                 material.Set("Albedo", texture);
-                if (!billboardSprite) material.cullMode = CullFaceMode.Front;
+                material.cullMode = CullFaceMode.FrontAndBack;
             }
 
             return material;
