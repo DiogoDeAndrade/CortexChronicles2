@@ -17,7 +17,7 @@ void main()
 
     fragUV = uv;
     gl_Position = vec4(((position.x * MaterialWorldScale.x + MaterialWorldPos.x) / Resolution.x) * 2 - 1,
-                       ((position.y * MaterialWorldScale.y + MaterialWorldPos.y) / Resolution.y) * 2 - 1,
+                       -(((position.y * MaterialWorldScale.y + MaterialWorldPos.y) / Resolution.y) * 2 - 1),
                        0.01,
                        1);
 }

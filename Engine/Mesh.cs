@@ -42,7 +42,6 @@ namespace OpenTKBase
 
         public void Clear()
         {
-            return;
             if (vbo != -1)
             {
                 Console.WriteLine("Destroy VBO = " + vbo);
@@ -303,7 +302,7 @@ namespace OpenTKBase
 
             vertexDirty = false;
 
-            Console.WriteLine("Created VBO = " + vbo);
+            //Console.WriteLine("Created VBO = " + vbo);
         }
         public void UpdateIndex()
         {

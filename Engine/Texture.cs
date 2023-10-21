@@ -18,6 +18,7 @@ namespace OpenTKBase
         private bool                isRendertarget = false;
         private Texture             colorTexture;
         private Texture             depthTexture;
+        private string              filename = "";
 
         public int width { get; private set; }
         public int height { get; private set; }
@@ -53,6 +54,8 @@ namespace OpenTKBase
 
         public bool LoadCube(string base_filename)
         {
+            filename = base_filename;
+
             // Create image
             handle = GL.GenTexture();
             GL.BindTexture(TextureTarget.TextureCubeMap, handle);
@@ -122,6 +125,8 @@ namespace OpenTKBase
 
         public bool Load(string filename)
         {
+            this.filename = filename;
+
             // stb_image loads from the top-left pixel, whereas OpenGL loads from the bottom-left, causing the texture to be flipped vertically.
             // This will correct that, making the texture display properly.
             // StbImage.stbi_set_flip_vertically_on_load(1);

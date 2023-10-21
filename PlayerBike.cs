@@ -15,7 +15,11 @@ namespace OpenTKBase
         private SpriteRenderer  spriteRenderer;
         private SpriteRenderer  shadowRenderer;
 
-        public GameMap         gameMap;
+        public GameMap          gameMap;
+        public float            maxHealth = 100.0f;
+        public float health;
+
+        public float            healthPercentage => health / maxHealth;
 
         public override void Start()
         {
@@ -29,6 +33,8 @@ namespace OpenTKBase
             shadowRenderer = playerShadow.AddComponent<SpriteRenderer>();
             shadowRenderer.sprite = Resources.FindSprite("bike_shadow");
             shadowRenderer.mode = SpriteRenderer.Mode.World;
+
+            health = maxHealth;
         }
 
         public override void Update()
@@ -74,16 +80,24 @@ namespace OpenTKBase
                 if (gameMap.Spherecast(origin, dir, 0.5f, maxDist, ref dist, ref normal))
                 {
                     Vector3 reflectDir = dir.Reflect(normal);
-
-                    if (Vector3.Dot(reflectDir, dir) > 0)
+                    
+                    float dp = Vector3.Dot(reflectDir, dir);
+                    if (dp > 0)
                     {
                         // Just ping out of it change direction, take some damage maybe?
                         transform.position = origin.X0Z() + dir * dist + reflectDir * 1.0f;
-                        
+
                         transform.rotation = MathHelpers.LookRotation(reflectDir, Vector3.UnitY);
+
+                        health -= (1.0f - dp) * maxHealth;
                     }
                     else
                     {
+                        health = 0.0f;
+                    }
+
+                    if (health <= 0.0f)
+                    { 
                         spriteRenderer.enable = false;
                         this.enable = false;
                         shadowRenderer.enable = false;

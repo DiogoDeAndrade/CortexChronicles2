@@ -26,6 +26,8 @@ namespace OpenTKBase
         private float       _time = 0.0f;
         private Vector3     _mouseDelta;
         private long        _timeSinceLastUpdate;
+        private bool        _reset = false;
+        private bool        _restart = false;
 
         private bool    exit = false;
 
@@ -96,14 +98,8 @@ namespace OpenTKBase
 
         public void Restart()
         {
-            // Clear everything and initialize everything again
-            Resources.Clear();
-
-            _mainScene = new Scene();
-
-            initAction();
+            _restart = true;
         }
-
 
         public void Run(Action initFunction, Action mainLoopFunction)
         {
@@ -138,6 +134,12 @@ namespace OpenTKBase
         void RunUpdate()
         { 
             if (window == null) return;
+            if (_restart) return;
+            if (_reset)
+            {
+                _reset = false;
+                return;
+            }
 
             if (((window.KeyboardState.IsKeyDown(Keys.Escape)) && (window.KeyboardState.IsKeyDown(Keys.LeftShift))) || (exit))
             {
@@ -156,7 +158,9 @@ namespace OpenTKBase
                    (Component.needToStart))
             {
                 Component.AwakeAll();
+                if (_reset) return;
                 Component.StartAll();
+                if (_reset) return;
             }
 
             var tmp = window.MouseState.Delta;
@@ -173,6 +177,7 @@ namespace OpenTKBase
                         if (c.enable)
                         {
                             c.Update();
+                            if (_reset) return;
                         }
                     }
                 }
@@ -183,6 +188,22 @@ namespace OpenTKBase
 
         private void OnRender(FrameEventArgs e)
         {
+            if (_restart)
+            {
+                _reset = true;
+                // Clear everything and initialize everything again
+                Resources.Clear();
+
+                _mainScene = new Scene();
+
+                initAction();
+
+                _restart = false;
+
+                return;
+            }
+            if (_reset) return;
+
             if (window == null) return;
 
             runAction?.Invoke();
