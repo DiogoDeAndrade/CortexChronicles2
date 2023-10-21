@@ -36,5 +36,10 @@ namespace OpenTKBase
 
             return sprite;
         }
+
+        public static Sprite FindSprite(string name)
+        {
+            return _sprites[name];
+        }
     }
 }

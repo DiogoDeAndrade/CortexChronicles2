@@ -93,6 +93,13 @@ namespace OpenTKBase
         {
             runAction = mainLoopFunction;
 
+            while ((Component.needToAwake) ||
+                   (Component.needToStart))
+            {
+                Component.AwakeAll();
+                Component.StartAll();
+            }
+
             window?.Run();
         }
 
