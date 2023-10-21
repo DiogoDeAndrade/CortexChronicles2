@@ -35,6 +35,22 @@ namespace OpenTKBase
             objects.Add(go);            
         }
 
+        public void Remove(GameObject go)
+        {
+            objects.Remove(go);
+        }
+
+        public T FindObjectOfType<T>() where T : Component
+        {
+            foreach (GameObject go in objects)
+            {
+                T c = go.GetComponent<T>();
+                if (c != null) return c;
+            }
+
+            return null;
+        }
+
         public List<T> FindObjectsOfType<T>() where T: Component
         {
             List<T> ret = new List<T>();
@@ -49,15 +65,5 @@ namespace OpenTKBase
 
         public List<GameObject> GetAllObjects() => objects;
 
-        public T FindObjectOfType<T>() where T : Component
-        {
-            foreach (GameObject go in objects)
-            {
-                T c = go.GetComponent<T>();
-                if (c != null) return c;
-            }
-
-            return null;
-        }
     }
 }

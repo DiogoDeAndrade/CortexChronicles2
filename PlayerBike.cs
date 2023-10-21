@@ -13,8 +13,9 @@ namespace OpenTKBase
         private float           accelSpeed = 10.0f;
         private float           breakSpeed = 20.0f;
         private SpriteRenderer  spriteRenderer;
+        private SpriteRenderer  shadowRenderer;
 
-        public  GameMap         gameMap;
+        public GameMap         gameMap;
 
         public override void Start()
         {
@@ -25,9 +26,9 @@ namespace OpenTKBase
             playerShadow.transform.SetParent(transform);
             playerShadow.transform.localPosition = Vector3.UnitY * 0.1f;
             playerShadow.transform.localRotation = Quaternion.FromEulerAngles(MathF.PI * 0.5f, 0.0f, 0.0f);
-            var sr = playerShadow.AddComponent<SpriteRenderer>();
-            sr.sprite = Resources.FindSprite("bike_shadow");
-            sr.mode = SpriteRenderer.Mode.World;
+            shadowRenderer = playerShadow.AddComponent<SpriteRenderer>();
+            shadowRenderer.sprite = Resources.FindSprite("bike_shadow");
+            shadowRenderer.mode = SpriteRenderer.Mode.World;
         }
 
         public override void Update()
@@ -83,11 +84,14 @@ namespace OpenTKBase
                     }
                     else
                     {
-                        Console.WriteLine("EXPLODE!");
-                    }
+                        spriteRenderer.enable = false;
+                        this.enable = false;
+                        shadowRenderer.enable = false;
 
-                    Console.WriteLine($"Collision with ray {oldPos}/{dir} at distance {dist}, normal = {normal}!");
-                    //displayHit.transform.position = origin + dir * dist;
+                        GameObject playerExplosion = new GameObject();
+                        playerExplosion.transform.position = transform.position + Vector3.UnitY * 1.5f;
+                        playerExplosion.AddComponent<Explosion>();
+                    }
                 }
             }
         }        

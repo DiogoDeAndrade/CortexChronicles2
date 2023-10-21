@@ -65,7 +65,10 @@ namespace OpenTKBase
 
                         foreach (var render in allRender)
                         {
-                            render.Render(null, shadowmapMaterial);
+                            if (render.enable)
+                            {
+                                render.Render(null, shadowmapMaterial);
+                            }
                         }
 
                         shadowmap.Unset();
@@ -82,18 +85,20 @@ namespace OpenTKBase
             GL.CullFace(CullFaceMode.Back);
 
             var envMaterial = OpenTKApp.APP.mainScene.environment;
-            envMaterial.Set("LightCount", allLights.Count);
+            int lightIndex = 0;
             for (int i = 0; i < Math.Min(allLights.Count, 8); i++)
             {
                 var light = allLights[i];
-                envMaterial.Set($"Lights[{i}].type", (int)light.type);
-                envMaterial.Set($"Lights[{i}].position", light.transform.position);
-                envMaterial.Set($"Lights[{i}].direction", light.transform.forward);
-                envMaterial.Set($"Lights[{i}].color", light.lightColor);
-                envMaterial.Set($"Lights[{i}].intensity", light.intensity);
-                envMaterial.Set($"Lights[{i}].spot", light.cone.X * 0.5f, light.cone.Y * 0.5f, MathF.Cos(light.cone.X * 0.5f), MathF.Cos(light.cone.Y * 0.5f));
-                envMaterial.Set($"Lights[{i}].range", light.range);
-                envMaterial.Set($"Lights[{i}].shadowmapEnable", light.HasShadowmap());
+                if (!light.enable) continue;
+
+                envMaterial.Set($"Lights[{lightIndex}].type", (int)light.type);
+                envMaterial.Set($"Lights[{lightIndex}].position", light.transform.position);
+                envMaterial.Set($"Lights[{lightIndex}].direction", light.transform.forward);
+                envMaterial.Set($"Lights[{lightIndex}].color", light.lightColor);
+                envMaterial.Set($"Lights[{lightIndex}].intensity", light.intensity);
+                envMaterial.Set($"Lights[{lightIndex}].spot", light.cone.X * 0.5f, light.cone.Y * 0.5f, MathF.Cos(light.cone.X * 0.5f), MathF.Cos(light.cone.Y * 0.5f));
+                envMaterial.Set($"Lights[{lightIndex}].range", light.range);
+                envMaterial.Set($"Lights[{lightIndex}].shadowmapEnable", light.HasShadowmap());
                 if (light.HasShadowmap())
                 {
                     envMaterial.Set($"Lights[{i}].shadowmap", light.GetShadowmap().GetDepthTexture());
@@ -103,16 +108,22 @@ namespace OpenTKBase
                     envMaterial.Set($"Lights[{i}].shadowmap", GetDefaultShadowmap().GetDepthTexture());
                 }
                 envMaterial.Set($"Lights[{i}].shadowMatrix", light.GetShadowMatrix());
+
+                lightIndex++;
             }
             for (int i = Math.Min(allLights.Count, 8); i < 8; i++)
             {
-                envMaterial.Set($"Lights[{i}].shadowmap", GetDefaultShadowmap().GetDepthTexture());
+                envMaterial.Set($"Lights[{lightIndex}].shadowmap", GetDefaultShadowmap().GetDepthTexture());
+                lightIndex++;
             }
+            envMaterial.Set("LightCount", lightIndex);
 
             GL.Viewport(0, 0, OpenTKApp.APP.resX, OpenTKApp.APP.resY);
 
             foreach (var camera in allCameras)
             {
+                if (!camera.enable) continue;
+
                 // Clear color buffer and the depth buffer
                 GL.ClearColor(camera.GetClearColor());
                 GL.ClearDepth(camera.GetClearDepth());
@@ -124,7 +135,10 @@ namespace OpenTKBase
 
                 foreach (var render in allRender)
                 {
-                    render.Render(camera, null);
+                    if (render.enable)
+                    {
+                        render.Render(camera, null);
+                    }
                 }
             }
         }

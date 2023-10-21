@@ -6,6 +6,7 @@ using OpenTK.Windowing.Common.Input;
 using OpenTK.Windowing.Desktop;
 using OpenTK.Windowing.GraphicsLibraryFramework;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 
@@ -149,15 +150,20 @@ namespace OpenTKBase
 
             if (mainScene != null)
             {
-                var allObjects = mainScene.GetAllObjects();
+                var allObjects = new List<GameObject>(mainScene.GetAllObjects());
                 foreach (var obj in allObjects)
                 {
                     var allComponents = obj.GetAllComponents();
                     foreach (var c in allComponents)
                     {
-                        c.Update();
+                        if (c.enable)
+                        {
+                            c.Update();
+                        }
                     }
                 }
+
+                GameObject.DestroyAllObjects();
             }
         }
 

@@ -24,6 +24,8 @@ namespace OpenTKBase
 
             foreach (var camera in allCameras)
             {
+                if (!camera.enable) continue;
+
                 // Clear color buffer and the depth buffer
                 GL.ClearColor(camera.GetClearColor());
                 GL.ClearDepth(camera.GetClearDepth());
@@ -35,6 +37,8 @@ namespace OpenTKBase
 
                 foreach (var render in allRender)
                 {
+                    if (!render.enable) continue;
+
                     render.Render(camera, null);
                 }
             }

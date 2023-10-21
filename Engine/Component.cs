@@ -8,7 +8,8 @@ namespace OpenTKBase
 {
     public class Component
     {
-        private GameObject _gameObject;
+        private GameObject  _gameObject;
+        public  bool        enable = true;
 
         public GameObject gameObject
         {
@@ -27,6 +28,10 @@ namespace OpenTKBase
             componentsToAwake = new List<Component>();
             foreach (var c in toAwake)
             {
+                if (!c.enable)
+                {
+                    Console.WriteLine("Awakening disabled component, not sure if this leads to issues later...");
+                }
                 c.Awake();
             }
         }
@@ -36,6 +41,10 @@ namespace OpenTKBase
             componentsToStart = new List<Component>();
             foreach (var c in toStart)
             {
+                if (!c.enable)
+                {
+                    Console.WriteLine("Starting disabled component, not sure if this leads to issues later...");
+                }
                 c.Start();
             }
         }
@@ -50,14 +59,20 @@ namespace OpenTKBase
 
         public T GetComponent<T>() where T : Component => gameObject?.GetComponent<T>();
 
-        public virtual void Awake() { }
-        public virtual void Start() { }
-        public virtual void Update() { }
+        public void Destroy(GameObject gameObject)
+        {
+            gameObject.Destroy();
+        }
 
         static public T FindObjectOfType<T>() where T : Component
         {
             var scene = OpenTKApp.APP.mainScene;
             return scene.FindObjectOfType<T>();
         }
+        
+        public virtual void Awake() { }
+        public virtual void Start() { }
+        public virtual void Update() { }
+
     }
 }

@@ -52,6 +52,32 @@ namespace OpenTKBase
             return ret;
         }
 
+        static List<GameObject> objectsToDestroy = new List<GameObject>();
+        public void Destroy()
+        {
+            objectsToDestroy.Add(this);
+        }
+
+        static public void DestroyAllObjects()
+        {
+            if (objectsToDestroy.Count > 0)
+            {
+                var objectsToDestroyNow = new List<GameObject>(objectsToDestroy);
+                objectsToDestroy.Clear();
+                foreach (var obj in objectsToDestroyNow)
+                {
+                    OpenTKApp.APP?.mainScene?.Remove(obj);
+                    // Destroy children
+                    var children = new List<Transform>(obj.transform.GetChildren());
+                    foreach (var t in children)
+                    {
+                        t.SetParent(null);
+                        t.gameObject.Destroy();
+                    }
+                }
+            }
+        }
+
         public List<Component> GetAllComponents() => _components;
     }
 }

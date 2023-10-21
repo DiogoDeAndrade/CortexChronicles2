@@ -200,6 +200,7 @@ namespace SDLBase
             Resources.CreateSpriteForPixelArt("bike_break", "Textures/motorbike_break.png", new Vector2(0.5f, 1.0f), new Vector4(0.0f, 0.0f, 1.0f, 1.0f), 90);
             Resources.CreateSpriteForPixelArt("bike_shadow", "Textures/shadow.png", new Vector2(0.5f, 1.0f), new Vector4(0.0f, 0.0f, 1.0f, 1.0f), 90);
             Resources.CreateSpriteForPixelArt("dot", "Textures/dot.png", new Vector2(0.5f, 0.5f), new Vector4(0.0f, 0.0f, 1.0f, 1.0f), 90);
+            Resources.CreateSpriteSheetForPixelArt("explosion", "Textures/explosion.png", new Vector2(0.5f, 0.5f), 4, 4, 16, 90);
 
             GameObject playerCharacter = new GameObject();
             playerCharacter.transform.position = startPos;

@@ -40,8 +40,29 @@ namespace OpenTKBase
         {
             var texture = LoadTexture(textureName, TextureWrapMode.Clamp, TextureMinFilter.Nearest, false);
             
-            return Resources.CreateSprite(name, texture, hotspot, uvRect, pixelsPerUnit);
+            return CreateSprite(name, texture, hotspot, uvRect, pixelsPerUnit);
         }
+
+        public static void CreateSpriteSheetForPixelArt(string name, string textureName, Vector2 hotspot, int tilesX, int tilesY, int maxSprites, int pixelsPerUnit)
+        {
+            var texture = LoadTexture(textureName, TextureWrapMode.Clamp, TextureMinFilter.Nearest, false);
+
+            for (int y = 0; y < tilesY; y++)
+            {
+                for (int x = 0; x < tilesX; x++)
+                {
+                    int n = x + y * tilesX;
+                    if (n >= maxSprites) break;
+
+                    Vector4 r = new Vector4((float)x / tilesX, (float)y / tilesY, 0.0f, 0.0f);
+                    r.Z = r.X + 1.0f / tilesX;
+                    r.W = r.Y + 1.0f / tilesY;
+
+                    CreateSprite($"{name}{n}", texture, hotspot, r, pixelsPerUnit);
+                }
+            }
+        }
+
         public static Sprite FindSprite(string name)
         {
             return _sprites[name];

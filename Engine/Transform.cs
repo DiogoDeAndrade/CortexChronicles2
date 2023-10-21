@@ -77,6 +77,8 @@ namespace OpenTKBase
             get { if (dirty) UpdateInternals(); return _localToWorldMatrix; }
         }
 
+        public List<Transform> GetChildren() => _children;
+
         private void SetDirty()
         {
             dirty = true;
