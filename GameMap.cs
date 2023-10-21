@@ -285,6 +285,114 @@ namespace OpenTKBase
             return mapData[tx + ty * sizeX];
         }
 
+        public bool Raycast(Vector3 origin, Vector3 dir, float maxDist, ref float dist, ref Vector3 normal)
+        {
+            dist = float.MaxValue;
+            normal = Vector3.Zero;
+
+            // Don't check boundaryand only check places where there is a wall, but next to an 
+            // empty space
+            bool ret = false;
+            for (int y = 1; y < sizeZ - 1; y++)
+            {
+                for (int x = 1; x < sizeX - 1; x++)
+                {
+                    if (mapData[x + y * sizeX] == 1)
+                    {
+                        if ((mapData[(x - 1) + y * sizeX] == 0) ||
+                            (mapData[(x + 1) + y * sizeX] == 0) ||
+                            (mapData[x + (y - 1) * sizeX] == 0) ||
+                            (mapData[x + (y + 1) * sizeX] == 0))
+                        {
+                            var aabb = GetAABB(x, y);
+
+                            // Check distance to AABB
+                            float distToAABB = aabb.DistanceToPoint(origin);
+                            if (distToAABB < maxDist)
+                            {
+                                float d = float.MaxValue;
+                                Vector3 n = Vector3.Zero;
+                                if (aabb.Raycast(origin, dir, ref d, ref n))
+                                {
+                                    if (d < maxDist)
+                                    {
+                                        ret = true;
+                                        if (d < dist)
+                                        {
+                                            dist = d;
+                                            normal = n;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            return ret;
+        }
+
+        public bool Spherecast(Vector3 origin, Vector3 dir, float radius, float maxDist, ref float dist, ref Vector3 normal)
+        {
+            dist = float.MaxValue;
+            normal = Vector3.Zero;
+
+            // Don't check boundaryand only check places where there is a wall, but next to an 
+            // empty space
+            bool ret = false;
+            for (int y = 1; y < sizeZ - 1; y++)
+            {
+                for (int x = 1; x < sizeX - 1; x++)
+                {
+                    if (mapData[x + y * sizeX] == 1)
+                    {
+                        if ((mapData[(x - 1) + y * sizeX] == 0) ||
+                            (mapData[(x + 1) + y * sizeX] == 0) ||
+                            (mapData[x + (y - 1) * sizeX] == 0) ||
+                            (mapData[x + (y + 1) * sizeX] == 0))
+                        {
+                            var aabb = GetAABB(x, y);
+
+                            // Check distance to AABB
+                            float distToAABB = aabb.DistanceToPoint(origin);
+                            if (distToAABB < maxDist - radius)
+                            {
+                                float d = float.MaxValue;
+                                Vector3 n = Vector3.Zero;
+                                if (aabb.Spherecast(origin, dir, radius, ref d, ref n))
+                                {
+                                    if (d < maxDist)
+                                    {
+                                        ret = true;
+                                        if (d < dist)
+                                        {
+                                            dist = d;
+                                            normal = n;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            return ret;
+        }
+
+        public AABB GetAABB(int x, int y)
+        {
+            Vector3 center = GetCenterPos(x, y);
+            center += Vector3.UnitY * tileSizeY * 0.5f;
+
+            return new AABB
+            {
+                center = center,
+                extents = new Vector3(tileSizeX * 0.5f, tileSizeY * 0.5f, tileSizeZ * 0.5f)
+            };
+        }
+
         public override void Render(Camera camera, Material material)
         {
             Shader.SetMatrix(Shader.MatrixType.World, transform.localToWorldMatrix);

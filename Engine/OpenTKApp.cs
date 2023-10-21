@@ -132,7 +132,7 @@ namespace OpenTKBase
 
             long    timestamp = Stopwatch.GetTimestamp();
             
-            _timeDeltaTime = (float)(timestamp - _timeSinceLastUpdate) / Stopwatch.Frequency;            
+            _timeDeltaTime = MathF.Min(0.05f, (float)(timestamp - _timeSinceLastUpdate) / Stopwatch.Frequency);
             _time += _timeDeltaTime;
             Time.SetTimeParams(_time, _timeDeltaTime);
             _timeSinceLastUpdate = timestamp;

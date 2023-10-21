@@ -49,17 +49,47 @@ namespace OpenTKBase
             else
                 spriteRenderer.sprite = Resources.FindSprite("bike");
 
-
-            Console.WriteLine($"Speed = {bikeSpeed.Z}");
-
-
             Vector3 newPos = transform.position;
-            
+            Vector3 oldPos = newPos;
+
             newPos += transform.forward * bikeSpeed.Z * Time.deltaTime;
 
             transform.position = newPos;
 
             transform.rotation *= Quaternion.FromEulerAngles(0.0f, -4.0f * rightDir * Time.deltaTime, 0.0f);
-        }
+
+            // Check collision
+            Vector3 dir = (newPos - oldPos);
+            if (dir.LengthSquared > 0)
+            {
+                float maxDist = dir.Length;
+                dir /= maxDist;
+                maxDist += 1.0f;
+             
+                float   dist = 0.0f;
+                Vector3 normal = Vector3.Zero;
+                Vector3 origin = oldPos + Vector3.UnitY * 1.0f;
+                
+                if (gameMap.Spherecast(origin, dir, 0.5f, maxDist, ref dist, ref normal))
+                {
+                    Vector3 reflectDir = dir.Reflect(normal);
+
+                    if (Vector3.Dot(reflectDir, dir) > 0)
+                    {
+                        // Just ping out of it change direction, take some damage maybe?
+                        transform.position = origin.X0Z() + dir * dist + reflectDir * 1.0f;
+                        
+                        transform.rotation = MathHelpers.LookRotation(reflectDir, Vector3.UnitY);
+                    }
+                    else
+                    {
+                        Console.WriteLine("EXPLODE!");
+                    }
+
+                    Console.WriteLine($"Collision with ray {oldPos}/{dir} at distance {dist}, normal = {normal}!");
+                    //displayHit.transform.position = origin + dir * dist;
+                }
+            }
+        }        
     }
 }

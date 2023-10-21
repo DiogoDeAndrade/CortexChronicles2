@@ -199,6 +199,7 @@ namespace SDLBase
             Resources.CreateSpriteForPixelArt("bike_accel", "Textures/motorbike_accel.png", new Vector2(0.5f, 1.0f), new Vector4(0.0f, 0.0f, 1.0f, 1.0f), 90);
             Resources.CreateSpriteForPixelArt("bike_break", "Textures/motorbike_break.png", new Vector2(0.5f, 1.0f), new Vector4(0.0f, 0.0f, 1.0f, 1.0f), 90);
             Resources.CreateSpriteForPixelArt("bike_shadow", "Textures/shadow.png", new Vector2(0.5f, 1.0f), new Vector4(0.0f, 0.0f, 1.0f, 1.0f), 90);
+            Resources.CreateSpriteForPixelArt("dot", "Textures/dot.png", new Vector2(0.5f, 0.5f), new Vector4(0.0f, 0.0f, 1.0f, 1.0f), 90);
 
             GameObject playerCharacter = new GameObject();
             playerCharacter.transform.position = startPos;
@@ -216,6 +217,7 @@ namespace SDLBase
             camera.ortographic = false;
             var track = cameraObject.AddComponent<CameraTrack>();
             track.player = pb;
+            track.gameMap = gameMap;
             //FirstPersonController fps = cameraObject.AddComponent<FirstPersonController>();
             //fps.rotation = new Vector2(0.0f, -MathF.PI / 2.0f);
 
