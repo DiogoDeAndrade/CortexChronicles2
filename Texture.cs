@@ -18,7 +18,9 @@ namespace OpenTKBase
         private bool                isRendertarget = false;
         private Texture             colorTexture;
         private Texture             depthTexture;
-        private int                 width, height;
+
+        public int width { get; private set; }
+        public int height { get; private set; }
 
         public Texture(TextureWrapMode wrapMode = TextureWrapMode.Repeat, TextureMinFilter filterMode = TextureMinFilter.Linear, bool enableMips = true)
         {

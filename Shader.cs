@@ -32,7 +32,7 @@ namespace OpenTKBase
             public enum Type { 
                                 Material, Environment, Texture, EnvTexture, 
                                 Matrix, 
-                                ViewPos, ViewDir,
+                                ViewPos, ViewDir, ViewUp, ViewRight,
                                 HasTexture
             };
 
@@ -310,6 +310,16 @@ namespace OpenTKBase
                             var viewDir = (Vector4.UnitZ * viewMatrix).Xyz;
                             GL.Uniform3(u.slot, viewDir);
                             break;
+                        case Uniform.Type.ViewUp:
+                            viewMatrix = currentMatrices[(int)MatrixType.InvCamera].Get();
+                            var viewUp = (Vector4.UnitY * viewMatrix).Xyz;
+                            GL.Uniform3(u.slot, viewUp);
+                            break;
+                        case Uniform.Type.ViewRight:
+                            viewMatrix = currentMatrices[(int)MatrixType.InvCamera].Get();
+                            var viewRight = (Vector4.UnitX * viewMatrix).Xyz;
+                            GL.Uniform3(u.slot, viewRight);
+                            break;
                         default:
                             Console.Write($"Unhandled type of constant {u.type}!\n");
                             break;
@@ -486,6 +496,8 @@ namespace OpenTKBase
                 }
                 else if (uniformName == "ViewPos") uniforms.Add(new Uniform() { type = Uniform.Type.ViewPos, name = uniformName, slot = location, dataSize = size, dataType = type });
                 else if (uniformName == "ViewDir") uniforms.Add(new Uniform() { type = Uniform.Type.ViewDir, name = uniformName, slot = location, dataSize = size, dataType = type });
+                else if (uniformName == "ViewUp") uniforms.Add(new Uniform() { type = Uniform.Type.ViewUp, name = uniformName, slot = location, dataSize = size, dataType = type });
+                else if (uniformName == "ViewRight") uniforms.Add(new Uniform() { type = Uniform.Type.ViewRight, name = uniformName, slot = location, dataSize = size, dataType = type });
                 else
                 {
                     Console.WriteLine($"Can't parse uniform {uniformName} in shader {name}!");

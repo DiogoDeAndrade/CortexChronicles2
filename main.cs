@@ -197,9 +197,20 @@ namespace SDLBase
             // Create camera
             GameObject cameraObject = new GameObject();
             Camera camera = cameraObject.AddComponent<Camera>();
-            camera.transform.position = startPos + Vector3.UnitY * 2.5f;
+            camera.transform.position = startPos + Vector3.UnitY * 2.5f - Vector3.UnitX * 5;
+            camera.transform.rotation = Quaternion.FromEulerAngles(0.0f, MathF.PI / 2.0f, 0.0f);
             camera.ortographic = false;
             FirstPersonController fps = cameraObject.AddComponent<FirstPersonController>();
+            fps.rotation = new Vector2(0.0f, -MathF.PI / 2.0f);
+
+            // Create player character
+            var motorbike_texture = Resources.LoadTexture("Textures/motorbike.png", OpenTK.Graphics.OpenGL.TextureWrapMode.Clamp, OpenTK.Graphics.OpenGL.TextureMinFilter.Nearest, false);
+            var player_sprite = Resources.CreateSprite("bike", motorbike_texture, new Vector2(0.5f, 1.0f), new Vector4(0.0f, 0.0f, 1.0f, 1.0f), 90);
+
+            GameObject playerCharacter = new GameObject();
+            playerCharacter.transform.position = startPos;
+            SpriteRenderer sr = playerCharacter.AddComponent<SpriteRenderer>();
+            sr.sprite = player_sprite;
 
             // Create pipeline
             RPCortex renderPipeline = new RPCortex();

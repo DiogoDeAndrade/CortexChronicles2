@@ -9,7 +9,7 @@ namespace OpenTKBase
         public float moveSpeed = 50.0f;
         public float rotateSpeed = MathF.PI;
 
-        private Vector2 rotation = Vector2.Zero;
+        public Vector2 rotation = Vector2.Zero;
 
         public override void Update()
         {
