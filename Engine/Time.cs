@@ -10,7 +10,7 @@ namespace OpenTKBase
     {
         static private float _timeDeltaTime;
         static private float _time;
-        static public float timeDeltaTime => _timeDeltaTime;
+        static public float deltaTime => _timeDeltaTime;
         static public float time => _time;
 
         static public void SetTimeParams(float time, float timeDeltaTime)

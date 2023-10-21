@@ -8,7 +8,7 @@ namespace OpenTKBase
     {
         public PlayerBike       player;
         private Vector3         offset = new Vector3(0.0f, 2.5f, -5.0f);
-        private float           followSpeed = 0.05f;
+        private float           followSpeed = 0.55f;
 
         public override void Start()
         {
@@ -29,7 +29,7 @@ namespace OpenTKBase
             Quaternion currentRotation = transform.rotation;
             Quaternion targetRotation = LookRotation(dir, Vector3.UnitY);
 
-            //transform.rotation = Quaternion.Slerp(currentRotation, targetRotation, followSpeed);
+            transform.rotation = player.transform.rotation;// Quaternion.Slerp(currentRotation, targetRotation, followSpeed);
         }
 
         public static Quaternion LookRotation(Vector3 forward, Vector3 up)

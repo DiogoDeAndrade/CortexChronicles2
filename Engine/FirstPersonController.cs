@@ -26,7 +26,7 @@ namespace OpenTKBase
             var tr = Vector3.Cross(tf, Vector3.UnitY); tr.Y = 0.0f; tr.Normalize();
 
             moveDir = moveDir.X * tr + moveDir.Z * tf + moveDir.Y * Vector3.UnitY;
-            moveDir *= moveSpeed * Time.timeDeltaTime;
+            moveDir *= moveSpeed * Time.deltaTime;
 
             transform.position += moveDir;
 
@@ -35,8 +35,8 @@ namespace OpenTKBase
             mouseDelta.X = MathF.Sign(mouseDelta.X);
             mouseDelta.Y = 0.0f;// MathF.Sign(mouseDelta.Y);
 
-            float   angleY = -rotateSpeed * mouseDelta.X * Time.timeDeltaTime;
-            float   angleX = -rotateSpeed * mouseDelta.Y * Time.timeDeltaTime;
+            float   angleY = -rotateSpeed * mouseDelta.X * Time.deltaTime;
+            float   angleX = -rotateSpeed * mouseDelta.Y * Time.deltaTime;
 
             rotation.X += angleX;
             rotation.Y += angleY;

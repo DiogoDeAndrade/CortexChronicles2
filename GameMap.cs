@@ -277,6 +277,14 @@ namespace OpenTKBase
             return Vector3.Zero;
         }
 
+        public int GetTileFromWorldPos(Vector3 worldPos)
+        {
+            int tx = (int)MathF.Round((worldPos.X + sizeX * tileSizeX * 0.5f) / tileSizeX);
+            int ty = (int)MathF.Round((worldPos.Z + sizeZ * tileSizeZ * 0.5f) / tileSizeZ);
+
+            return mapData[tx + ty * sizeX];
+        }
+
         public override void Render(Camera camera, Material material)
         {
             Shader.SetMatrix(Shader.MatrixType.World, transform.localToWorldMatrix);

@@ -36,6 +36,12 @@ namespace OpenTKBase
             return sprite;
         }
 
+        public static Sprite CreateSpriteForPixelArt(string name, string textureName, Vector2 hotspot, Vector4 uvRect, int pixelsPerUnit)
+        {
+            var texture = LoadTexture(textureName, TextureWrapMode.Clamp, TextureMinFilter.Nearest, false);
+            
+            return Resources.CreateSprite(name, texture, hotspot, uvRect, pixelsPerUnit);
+        }
         public static Sprite FindSprite(string name)
         {
             return _sprites[name];
