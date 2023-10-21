@@ -64,6 +64,8 @@ namespace OpenTKBase
             window.UpdateFrame += OnUpdateFrame;
             window.RenderFrame += OnRender;
 
+            Input.SetWindow(window);
+
             // Activate depth testing
             GL.Enable(EnableCap.DepthTest);
             // Set the test function
@@ -123,8 +125,6 @@ namespace OpenTKBase
             window.CursorState = (b)?(CursorState.Grabbed):(CursorState.Normal);
         }
 
-        public float timeDeltaTime => _timeDeltaTime;
-
         private void OnUpdateFrame(FrameEventArgs e)
         {
             if (window == null) return;
@@ -135,7 +135,8 @@ namespace OpenTKBase
                 return;
             }
 
-            _timeDeltaTime = (Environment.TickCount - _timeSinceLastUpdate)/1000.0f;
+            _timeDeltaTime = (Environment.TickCount - _timeSinceLastUpdate) / 1000.0f;
+            Time.SetTime(_timeDeltaTime);
             _timeSinceLastUpdate = Environment.TickCount;
 
             var tmp = window.MouseState.Delta;

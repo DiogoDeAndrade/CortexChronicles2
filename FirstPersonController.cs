@@ -15,18 +15,18 @@ namespace OpenTKBase
         {
             Vector3 moveDir = Vector3.Zero;
 
-            if (OpenTKApp.APP.GetKey(Keys.W)) moveDir.Z = 1.0f;
-            if (OpenTKApp.APP.GetKey(Keys.S)) moveDir.Z = -1.0f;
-            if (OpenTKApp.APP.GetKey(Keys.A)) moveDir.X = -1.0f;
-            if (OpenTKApp.APP.GetKey(Keys.D)) moveDir.X = 1.0f;
-            if (OpenTKApp.APP.GetKey(Keys.Q)) moveDir.Y = -1.0f;
-            if (OpenTKApp.APP.GetKey(Keys.E)) moveDir.Y = 1.0f;
+            if (Input.GetKey(Keys.W)) moveDir.Z = 1.0f;
+            if (Input.GetKey(Keys.S)) moveDir.Z = -1.0f;
+            if (Input.GetKey(Keys.A)) moveDir.X = -1.0f;
+            if (Input.GetKey(Keys.D)) moveDir.X = 1.0f;
+            if (Input.GetKey(Keys.Q)) moveDir.Y = -1.0f;
+            if (Input.GetKey(Keys.E)) moveDir.Y = 1.0f;
 
             var tf = transform.forward; tf.Y = 0.0f; tf.Normalize();
             var tr = Vector3.Cross(tf, Vector3.UnitY); tr.Y = 0.0f; tr.Normalize();
 
             moveDir = moveDir.X * tr + moveDir.Z * tf + moveDir.Y * Vector3.UnitY;
-            moveDir *= moveSpeed * OpenTKApp.APP.timeDeltaTime;
+            moveDir *= moveSpeed * Time.timeDeltaTime;
 
             transform.position += moveDir;
 
@@ -35,8 +35,8 @@ namespace OpenTKBase
             mouseDelta.X = MathF.Sign(mouseDelta.X);
             mouseDelta.Y = 0.0f;// MathF.Sign(mouseDelta.Y);
 
-            float   angleY = -rotateSpeed * mouseDelta.X * OpenTKApp.APP.timeDeltaTime;
-            float   angleX = -rotateSpeed * mouseDelta.Y * OpenTKApp.APP.timeDeltaTime;
+            float   angleY = -rotateSpeed * mouseDelta.X * Time.timeDeltaTime;
+            float   angleX = -rotateSpeed * mouseDelta.Y * Time.timeDeltaTime;
 
             rotation.X += angleX;
             rotation.Y += angleY;
