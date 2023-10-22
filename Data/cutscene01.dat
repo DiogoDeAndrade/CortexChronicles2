@@ -1,0 +1,11 @@
+DEFSPEAKER Hacker DARKMAGENTA GREY Cyra Vale
+DEFSPEAKER Jax BLUE GREY Jax Riven
+BACKGROUND Textures/cutscene_hacker.png
+WAITTIME 1
+TALK Hacker You read me, Jax?
+TALK Jax Loud and clear, Cyra... What can I do for you?
+TALK Hacker Got a delivery for you!
+TALK Hacker Go to entry 7B in the Valley to get it, and take it to 3A Uptown!
+TALK Jax Alright, talk you soon!
+BACKGROUND
+WAITTIME 2

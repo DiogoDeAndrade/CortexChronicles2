@@ -37,12 +37,31 @@ namespace OpenTKBase
             _textures.Add(textureName, texture);
         }
 
+        public static void RemoveTexture(string textureName)
+        {
+            Texture texture;
+            if (!_textures.TryGetValue(textureName, out texture)) return;
+
+            texture.Clear();
+            _textures.Remove(textureName);
+        }
+
         public static Texture LoadTexture(string textureFilename, TextureWrapMode wrapMode = TextureWrapMode.Repeat, TextureMinFilter filter = TextureMinFilter.Linear, bool mips = true)
         {
             Texture texture = new Texture(wrapMode, filter, false);
             texture.Load(textureFilename);
 
             AddTexture(textureFilename, texture);
+
+            return texture;
+        }
+
+        public static Texture LoadTexture(string textureName, string textureFilename, TextureWrapMode wrapMode = TextureWrapMode.Repeat, TextureMinFilter filter = TextureMinFilter.Linear, bool mips = true)
+        {
+            Texture texture = new Texture(wrapMode, filter, false);
+            texture.Load(textureFilename);
+
+            AddTexture(textureName, texture);
 
             return texture;
         }
@@ -62,7 +81,7 @@ namespace OpenTKBase
             return _fonts[name];
         }
 
-        public static Sprite CreateSprite(string name, Texture texture, Vector2 hotspot, Vector4 uvRect, int pixelsPerUnit)
+        public static Sprite CreateSprite(string name, Texture texture, Vector2 hotspot, Vector4 uvRect, float pixelsPerUnit)
         {
             Sprite sprite = new Sprite()
             {
@@ -77,14 +96,14 @@ namespace OpenTKBase
             return sprite;
         }
 
-        public static Sprite CreateSpriteForPixelArt(string name, string textureName, Vector2 hotspot, Vector4 uvRect, int pixelsPerUnit)
+        public static Sprite CreateSpriteForPixelArt(string name, string textureName, Vector2 hotspot, Vector4 uvRect, float pixelsPerUnit)
         {
             var texture = LoadTexture(textureName, TextureWrapMode.Clamp, TextureMinFilter.Nearest, false);
             
             return CreateSprite(name, texture, hotspot, uvRect, pixelsPerUnit);
         }
 
-        public static void CreateSpriteSheetForPixelArt(string name, string textureName, Vector2 hotspot, int tilesX, int tilesY, int maxSprites, int pixelsPerUnit)
+        public static void CreateSpriteSheetForPixelArt(string name, string textureName, Vector2 hotspot, int tilesX, int tilesY, int maxSprites, float pixelsPerUnit)
         {
             var texture = LoadTexture(textureName, TextureWrapMode.Clamp, TextureMinFilter.Nearest, false);
 
@@ -106,7 +125,21 @@ namespace OpenTKBase
 
         public static Sprite FindSprite(string name)
         {
-            return _sprites[name];
+            Sprite ret;
+            if (_sprites.TryGetValue(name, out ret))
+            {
+                return ret;
+            }
+            return null;
+        }
+
+        public static void RemoveSprite(string spriteName)
+        {
+            Sprite sprite;
+            if (!_sprites.TryGetValue(spriteName, out sprite)) return;
+
+            sprite.Clear();
+            _sprites.Remove(spriteName);
         }
     }
 }

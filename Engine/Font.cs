@@ -98,7 +98,7 @@ namespace OpenTKBase
             return new Vector2((charWidth + spacingX) * text.Length, (charHeight + spacingY));
         }
 
-        internal void RenderSingleMonospace(int x, int y, int charWidth, int charHeight, int spacingX, string text, Color4 color, Align align = Align.Left)
+        public void RenderSingleMonospace(int x, int y, int charWidth, int charHeight, int spacingX, string text, Color4 color, Align align = Align.Left)
         {
             List<Vector3>   vertex = new List<Vector3>();
             List<Vector2>   uvs = new List<Vector2>();
@@ -136,6 +136,37 @@ namespace OpenTKBase
             mesh.SetUVs(uvs);
             mesh.SetIndices(indices);
             mesh.Render(material);
+        }
+
+        internal void RenderMonospace(int x, int y, int maxWidth, int charWidth, int charHeight, int spacingX, int spacingY, string text, Color4 color, Align align = Align.Left)
+        {
+            // Break text in parts
+            List<string> str = new List<string>();
+
+            var     words = text.Split(' ');
+            var     tmp = words[0];
+            for (int i = 1; i < words.Length; i++)
+            {
+                if ((tmp.Length + words[i].Length + 1) * (charWidth + spacingX) > maxWidth)
+                {
+                    str.Add(tmp);
+                    tmp = words[i];
+                }
+                else
+                {
+                    tmp += " " + words[i];
+                }
+            }
+
+            if (tmp != "") str.Add(tmp);
+
+            int yy = y;
+            for (int i = 0; i < str.Count; i++)
+            {
+                RenderSingleMonospace(x, yy, charWidth, charHeight, spacingX, str[i], color, align);
+                yy += charHeight + spacingY;
+            }
+
         }
     }
 }

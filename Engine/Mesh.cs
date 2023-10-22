@@ -273,9 +273,10 @@ namespace OpenTKBase
             if (vbo != -1)
             {
                 // Guarantee that this buffer is not in use
-                GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
-                GL.DeleteBuffer(vbo);
+                OpenTKApp.AddToGfxQueue(OpenTKApp.GfxOp.DeleteVbo, vbo);
                 vbo = -1;
+
+                vaos.Clear();
             }
 
             vbo = GL.GenBuffer();
@@ -304,9 +305,7 @@ namespace OpenTKBase
 
             if (ibo != -1)
             {
-                // Guarantee that this buffer is not in use
-                GL.BindBuffer(BufferTarget.ElementArrayBuffer, 0);
-                GL.DeleteBuffer(ibo);
+                OpenTKApp.AddToGfxQueue(OpenTKApp.GfxOp.DeleteIbo, ibo);
                 ibo = -1;
             }
 

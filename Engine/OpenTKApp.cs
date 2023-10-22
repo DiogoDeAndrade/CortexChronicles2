@@ -18,6 +18,8 @@ namespace OpenTKBase
     {
         public  int         resX { private set; get; }
         public  int         resY { private set; get; }
+        public  int         windowSizeX { private set; get; }
+        public  int         windowSizeY { private set; get; }
         private string      title = "Test App";
         private bool        debug = false;
         private Action      initAction = null;
@@ -41,8 +43,8 @@ namespace OpenTKBase
 
         public OpenTKApp(int resX, int resY, string title, bool debug = false)
         {
-            this.resX = resX;
-            this.resY = resY;
+            this.resX = windowSizeX = resX;
+            this.resY = windowSizeY = resY;
             this.title = title;
             this.debug = debug;
 
@@ -74,6 +76,7 @@ namespace OpenTKBase
             window.UpdateFrequency = 60.0f;
             window.UpdateFrame += OnUpdateFrame;
             window.RenderFrame += OnRender;
+            window.Resize += OnResize;
 
             Input.SetWindow(window);
 
@@ -95,6 +98,12 @@ namespace OpenTKBase
             _timeSinceLastUpdate = Stopwatch.GetTimestamp();
 
             return true;
+        }
+
+        private void OnResize(ResizeEventArgs obj)
+        {
+            windowSizeX = obj.Size.X;
+            windowSizeY = obj.Size.Y;
         }
 
         public void Shutdown()
@@ -161,7 +170,20 @@ namespace OpenTKBase
                 return;
             }
 
-            long    timestamp = Stopwatch.GetTimestamp();
+            if (((window.KeyboardState.IsKeyDown(Keys.Enter)) && (window.KeyboardState.IsKeyDown(Keys.LeftAlt))) || (exit))
+            {
+                if (window.WindowState == WindowState.Normal)
+                {
+                    window.WindowState = WindowState.Fullscreen;
+                }
+                else if (window.WindowState == WindowState.Fullscreen)
+                {
+                    window.WindowState = WindowState.Normal;
+                    window.Size = new Vector2i(resX, resY);
+                }
+            }
+
+            long timestamp = Stopwatch.GetTimestamp();
             
             _timeDeltaTime = MathF.Min(0.05f, (float)(timestamp - _timeSinceLastUpdate) / Stopwatch.Frequency);
             _time += _timeDeltaTime;

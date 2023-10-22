@@ -20,7 +20,7 @@ namespace OpenTKBase
 
             var envMaterial = OpenTKApp.APP.mainScene.environment;
 
-            GL.Viewport(0, 0, OpenTKApp.APP.resX, OpenTKApp.APP.resY);
+            GL.Viewport(0, 0, OpenTKApp.APP.windowSizeX, OpenTKApp.APP.windowSizeY);
 
             foreach (var camera in allCameras)
             {
