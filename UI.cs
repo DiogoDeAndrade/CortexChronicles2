@@ -14,10 +14,12 @@ namespace OpenTKBase
 
         private Material    ssmaterial;
         private PlayerBike  player;
+        private Font        font;
 
         public override void Start()
         {
             player = FindObjectOfType<PlayerBike>();
+            font = Resources.FindFont("Fonts/simple_ascii.png");
         }
 
         public override void Update()
@@ -72,6 +74,8 @@ namespace OpenTKBase
             Sprite gameOver = Resources.FindSprite("GameOver");
 
             DrawScreenspace(gameOver, (int)(OpenTKApp.APP.resX * 0.5f), (int)(OpenTKApp.APP.resY * 0.5f), 5.0f);
+
+            font.RenderSingleMonospace((int)(OpenTKApp.APP.resX * 0.5f), (int)(OpenTKApp.APP.resY * 0.5f) + 100, 50, 50, 4, "PRESS ANY KEY TO CONTINUE", Color4.Yellow, Font.Align.CenterX);
 
             GL.Enable(EnableCap.DepthTest);
         }

@@ -1,7 +1,7 @@
-﻿using OpenTK.Mathematics;
+﻿using OpenTK;
 using System.Collections.Generic;
 using OpenTK.Graphics.OpenGL;
-using System.Reflection.Metadata;
+using OpenTK.Mathematics;
 
 namespace OpenTKBase
 {
@@ -17,7 +17,6 @@ namespace OpenTKBase
 
         public void Clear()
         {
-            return;
             if (mesh != null)
             {
                 mesh.Clear();

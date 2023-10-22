@@ -1,5 +1,5 @@
-﻿using OpenTK.Mathematics;
-using OpenTK.Windowing.GraphicsLibraryFramework;
+﻿using OpenTK;
+using OpenTK.Mathematics;
 using System;
 
 namespace OpenTKBase

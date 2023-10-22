@@ -58,6 +58,7 @@ namespace OpenTKBase
                                         Title = title,
                                         Profile = ContextProfile.Compatability,
                                         API = ContextAPI.OpenGL,
+                                        APIVersion = new Version(4, 1),
                                         Flags = (debug)?(ContextFlags.Debug):(ContextFlags.Default)
                                     });
 
@@ -67,6 +68,8 @@ namespace OpenTKBase
                 GL.Enable(EnableCap.DebugOutput);
                 GL.Enable(EnableCap.DebugOutputSynchronous);
             }
+
+            Console.WriteLine($"OpenGL Version: {GL.GetString(StringName.Version)}");
 
             window.UpdateFrequency = 60.0f;
             window.UpdateFrame += OnUpdateFrame;

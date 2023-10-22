@@ -42,7 +42,8 @@ namespace SDLBase
                 env.Set("FogParams", new Vector2(0.0f, 80.0f));
                 env.Set("FogColor", Color.Black);
 
-                // Create player character
+                // Load resources
+                Resources.LoadFont("Fonts/simple_ascii.png", 5, 7, true, 1, 1, 2, 2);
                 Resources.CreateSpriteForPixelArt("bike", "Textures/motorbike.png", new Vector2(0.5f, 1.0f), new Vector4(0.0f, 0.0f, 1.0f, 1.0f), 90);
                 Resources.CreateSpriteForPixelArt("bike_accel", "Textures/motorbike_accel.png", new Vector2(0.5f, 1.0f), new Vector4(0.0f, 0.0f, 1.0f, 1.0f), 90);
                 Resources.CreateSpriteForPixelArt("bike_break", "Textures/motorbike_break.png", new Vector2(0.5f, 1.0f), new Vector4(0.0f, 0.0f, 1.0f, 1.0f), 90);
@@ -54,6 +55,7 @@ namespace SDLBase
                 Resources.CreateSpriteForPixelArt("HealthbarFull", "Textures/health_cell_full.png", new Vector2(0.0f, 0.0f), new Vector4(0.0f, 0.0f, 1.0f, 1.0f), 20);
                 Resources.CreateSpriteForPixelArt("HealthbarEmpty", "Textures/health_cell_empty.png", new Vector2(0.0f, 0.0f), new Vector4(0.0f, 0.0f, 1.0f, 1.0f), 20);
 
+                // Create player character
                 GameObject playerCharacter = new GameObject();
                 playerCharacter.transform.position = startPos;
                 playerCharacter.transform.rotation = Quaternion.FromEulerAngles(0.0f, -MathF.PI / 2.0f, 0.0f);

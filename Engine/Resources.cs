@@ -10,6 +10,7 @@ namespace OpenTKBase
     {
         static private Dictionary<string, Texture> _textures = new Dictionary<string, Texture>();
         static private Dictionary<string, Sprite>  _sprites = new Dictionary<string, Sprite>();
+        static private Dictionary<string, Font> _fonts = new Dictionary<string, Font>();
 
         public static void Clear()
         {
@@ -21,9 +22,14 @@ namespace OpenTKBase
             {
                 sprite.Clear();
             }
+            foreach (var font in _fonts.Values)
+            {
+                font.Clear();
+            }
 
             _textures = new Dictionary<string, Texture>();
             _sprites = new Dictionary<string, Sprite>();
+            _fonts = new Dictionary<string, Font>();
         }
 
         public static Texture LoadTexture(string textureFilename, TextureWrapMode wrapMode = TextureWrapMode.Repeat, TextureMinFilter filter = TextureMinFilter.Linear, bool mips = true)
@@ -34,6 +40,21 @@ namespace OpenTKBase
             _textures.Add(textureFilename, texture);
 
             return texture;
+        }
+
+        public static Font LoadFont(string fontName, int gridX, int gridY, bool gridSize, int startX = 0, int startY = 0, int spacingX = 0, int spacingY = 0)
+        {
+            Font font = new Font();
+            font.Load(fontName, gridX, gridY, gridSize, startX, startY, spacingX, spacingY);
+
+            _fonts.Add(fontName, font);
+
+            return font;
+        }
+ 
+        public static Font FindFont(string name)
+        {
+            return _fonts[name];
         }
 
         public static Sprite CreateSprite(string name, Texture texture, Vector2 hotspot, Vector4 uvRect, int pixelsPerUnit)

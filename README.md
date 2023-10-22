@@ -18,7 +18,9 @@ Art was done by me, and then processed in Photoshop to give the high-res ZX-Spec
 
 * All game source code by Diogo de Andrade is licensed under the [MIT] license.
 * Tunel art by [mieki256], available through the [CC0] license.
-* All art by Diogo de Andrade, available throught the [CC0] license.
+* Uses [QuickFont] package for text rendering.
+* All remaining art by Diogo de Andrade, available throught the [CC0] license.
+ 
 
 ## Metadata
 
@@ -29,4 +31,5 @@ Art was done by me, and then processed in Photoshop to give the high-res ZX-Spec
 [CC0]:https://creativecommons.org/publicdomain/zero/1.0/
 [CC-BY 3.0]:https://creativecommons.org/licenses/by/3.0/
 [mieki256]:https://opengameart.org/users/mieki256
+[QuickFont]:https://github.com/opcon/QuickFont
 [MIT]:LICENSE

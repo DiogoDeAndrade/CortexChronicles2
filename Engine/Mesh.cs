@@ -272,8 +272,6 @@ namespace OpenTKBase
         {
             if (vbo != -1)
             {
-                Console.WriteLine("Destroy VBO = " + vbo);
-
                 // Guarantee that this buffer is not in use
                 GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
                 GL.DeleteBuffer(vbo);
