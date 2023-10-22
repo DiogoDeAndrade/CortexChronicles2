@@ -140,6 +140,18 @@ namespace OpenTKBase
             return true;
         }
 
+        public bool Load(byte[] data, int width, int height)
+        {
+            this.filename = "";
+
+            Create(TextureTarget.Texture2D, PixelInternalFormat.Rgba, PixelFormat.Rgba, PixelType.UnsignedByte, width, height, data);
+
+            this.width = width;
+            this.height = height;
+
+            return true;
+        }
+
         public bool CreateDepth(int width = 0, int height = 0)
         {
             if (width != 0) this.width = width;

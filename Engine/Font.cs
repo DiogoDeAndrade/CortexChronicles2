@@ -26,8 +26,11 @@ namespace OpenTKBase
 
         public void Clear()
         {
-            texture.Clear();
-            texture = null;
+            if (texture != null)
+            {
+                texture.Clear();
+                texture = null;
+            }
         }
 
         public bool Load(string fontName, int gridX, int gridY, bool gridSize, int startX = 0, int startY = 0, int spacingX = 0, int spacingY = 0)

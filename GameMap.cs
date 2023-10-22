@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using OpenTK.Graphics.OpenGL;
 using OpenTK.Mathematics;
 using OpenTK.Windowing.GraphicsLibraryFramework;
 
@@ -78,6 +79,30 @@ namespace OpenTKBase
                 }
             }
             sizeZ = textMapData.Count;
+
+            // Build map texture
+            var data = new byte[sizeX * sizeZ * 4];
+            int srcIndex = 0;
+            int dstIndex = 0;
+            for (int y = 0; y < sizeZ; y++)
+            {
+                for (int x = 0; x < sizeX; x++)
+                {
+                    data[dstIndex] = 0;
+                    data[dstIndex + 1] = 216;// (byte)((mapData[srcIndex] == 0) ? (216) : (0));
+                    data[dstIndex + 2] = 0;
+                    data[dstIndex + 3] = (byte)((mapData[srcIndex] == 0) ? (255) : (100));
+
+                    dstIndex += 4;
+                    srcIndex++;
+                }
+            }
+
+            Texture texture = new Texture(TextureWrapMode.Clamp, TextureMinFilter.Nearest, false);
+            texture.Load(data, sizeX, sizeZ);
+
+            Resources.AddTexture("Map", texture);
+            Resources.CreateSprite("Map", texture, new Vector2(0.5f, 0.5f), new Vector4(0.0f, 0.0f, 1.0f, 1.0f), 1);
         }
 
         public void BuildGeometry()
@@ -277,12 +302,17 @@ namespace OpenTKBase
             return Vector3.Zero;
         }
 
-        public int GetTileFromWorldPos(Vector3 worldPos)
+        public Vector2 WorldToTile(Vector3 worldPos)
         {
-            int tx = (int)MathF.Round((worldPos.X + sizeX * tileSizeX * 0.5f) / tileSizeX);
-            int ty = (int)MathF.Round((worldPos.Z + sizeZ * tileSizeZ * 0.5f) / tileSizeZ);
+            return new Vector2(MathF.Round((worldPos.X + sizeX * tileSizeX * 0.5f) / tileSizeX),
+                               MathF.Round((worldPos.Z + sizeZ * tileSizeZ * 0.5f) / tileSizeZ));
+        }
 
-            return mapData[tx + ty * sizeX];
+        public int WorldToTileIndex(Vector3 worldPos)
+        {
+            var t = WorldToTile(worldPos);
+
+            return mapData[(int)t.X + (int)t.Y * sizeX];
         }
 
         public bool Raycast(Vector3 origin, Vector3 dir, float maxDist, ref float dist, ref Vector3 normal)

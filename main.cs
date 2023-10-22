@@ -55,6 +55,9 @@ namespace SDLBase
                 Resources.CreateSpriteForPixelArt("HealthbarFull", "Textures/health_cell_full.png", new Vector2(0.0f, 0.0f), new Vector4(0.0f, 0.0f, 1.0f, 1.0f), 20);
                 Resources.CreateSpriteForPixelArt("HealthbarEmpty", "Textures/health_cell_empty.png", new Vector2(0.0f, 0.0f), new Vector4(0.0f, 0.0f, 1.0f, 1.0f), 20);
 
+                Resources.CreateSpriteForPixelArt("TransparentBlack", "Textures/transparent_black.png", new Vector2(0.5f, 0.5f), new Vector4(0.0f, 0.0f, 1.0f, 1.0f), 1);
+                Resources.CreateSpriteForPixelArt("Arrow", "Textures/arrow.png", new Vector2(0.5f, 1.0f), new Vector4(0.0f, 0.0f, 1.0f, 1.0f), 1);
+
                 // Create player character
                 GameObject playerCharacter = new GameObject();
                 playerCharacter.transform.position = startPos;

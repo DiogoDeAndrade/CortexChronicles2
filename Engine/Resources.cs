@@ -32,12 +32,17 @@ namespace OpenTKBase
             _fonts = new Dictionary<string, Font>();
         }
 
+        public static void AddTexture(string textureName, Texture texture)
+        {
+            _textures.Add(textureName, texture);
+        }
+
         public static Texture LoadTexture(string textureFilename, TextureWrapMode wrapMode = TextureWrapMode.Repeat, TextureMinFilter filter = TextureMinFilter.Linear, bool mips = true)
         {
             Texture texture = new Texture(wrapMode, filter, false);
             texture.Load(textureFilename);
 
-            _textures.Add(textureFilename, texture);
+            AddTexture(textureFilename, texture);
 
             return texture;
         }
