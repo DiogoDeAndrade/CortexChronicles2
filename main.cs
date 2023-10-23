@@ -30,7 +30,7 @@ namespace SDLBase
                 // Create map
                 GameObject gameMapObject = new GameObject();
                 GameMap gameMap = gameMapObject.AddComponent<GameMap>();
-                gameMap.LoadMap("Data/game_map.dat");
+                gameMap.LoadMap("Data/game_map01.dat");
                 gameMap.BuildGeometry();
 
                 // Get coordinates of special places

@@ -10,7 +10,7 @@ namespace OpenTKBase
         private Vector3         offset = new Vector3(0.0f, 2.5f, -5.0f);
         private float           followSpeed = 0.55f;
         public GameMap          gameMap;
-
+        public bool             reset = true;
 
         public override void Start()
         {
@@ -23,33 +23,36 @@ namespace OpenTKBase
                                 offset.Y * player.transform.up +
                                 offset.Z * player.transform.forward;
 
-            Vector3 currentPos = transform.position;
-            Vector3 newPos = currentPos + (targetPos - currentPos) * followSpeed;
-
-            if (gameMap != null)
+            if (reset)
             {
-                Vector3 rayDir = currentPos - newPos;
-                float   maxDist = rayDir.Length;
-                if (maxDist > 0)
+                transform.position = targetPos;
+                transform.rotation = player.transform.rotation;
+            }
+            else
+            {
+                Vector3 currentPos = transform.position;
+                Vector3 newPos = currentPos + (targetPos - currentPos) * followSpeed;
+
+                if (gameMap != null)
                 {
-                    rayDir /= maxDist;
-                    maxDist += 0.1f;
-                    float   dist = 0.0f;
-                    Vector3 normal = Vector3.Zero;
-                    if (gameMap.Raycast(currentPos, rayDir, maxDist, ref dist, ref normal))
+                    Vector3 rayDir = currentPos - newPos;
+                    float maxDist = rayDir.Length;
+                    if (maxDist > 0)
                     {
-                        newPos = currentPos + rayDir * maxDist + normal * 1.0f;
+                        rayDir /= maxDist;
+                        maxDist += 0.1f;
+                        float dist = 0.0f;
+                        Vector3 normal = Vector3.Zero;
+                        if (gameMap.Raycast(currentPos, rayDir, maxDist, ref dist, ref normal))
+                        {
+                            newPos = currentPos + rayDir * maxDist + normal * 1.0f;
+                        }
                     }
                 }
+
+                transform.position = newPos;
+                transform.rotation = player.transform.rotation;
             }
-
-            transform.position = newPos;
-
-            Vector3 dir = ((player.transform.position + player.transform.up * 2.0f) - currentPos).Normalized();
-            Quaternion currentRotation = transform.rotation;
-            Quaternion targetRotation = MathHelpers.LookRotation(dir, Vector3.UnitY);
-
-            transform.rotation = player.transform.rotation;// Quaternion.Slerp(currentRotation, targetRotation, followSpeed);
         }
     }
 }

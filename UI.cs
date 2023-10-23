@@ -40,6 +40,18 @@ namespace OpenTKBase
                     player.enable = false;
                     state = State.Map;
                 }
+                if ((Input.GetKeyDown(Keys.T)) && (Input.GetKey(Keys.LeftShift)) && (Input.GetKey(Keys.LeftControl)))
+                {
+                    player.GotoPos('T');
+                }
+
+                var targetPos = gameMap.GetPosition('T');
+
+                if (Vector3.Distance(player.transform.position, targetPos) < 5.0f)
+                {
+                    // Completed mission
+                    PlayCutscene(nextCutscene);
+                }
             }
             else if (state == State.Map)
             {
@@ -216,7 +228,7 @@ namespace OpenTKBase
         // CUTSCENE STUFF
         struct CutsceneElem
         {
-            public enum Type { Background, WaitTime, WaitKey, Talk };
+            public enum Type { Background, WaitTime, WaitKey, Talk, ChangeMap };
 
             public Type     type;
             public string   textData;
@@ -230,9 +242,10 @@ namespace OpenTKBase
             public Color4 textColor;
         }
         private Dictionary<string, Speaker> speakers = new Dictionary<string, Speaker>();
-        private List<CutsceneElem> cutsceneElems;
-        private int cutsceneIndex;
-        private float cutsceneTimer;
+        private List<CutsceneElem>          cutsceneElems;
+        private int                         cutsceneIndex;
+        private float                       cutsceneTimer;
+        private string                      nextCutscene;
 
         public void PlayCutscene(string cutsceneFile)
         {
@@ -263,12 +276,12 @@ namespace OpenTKBase
                                 {
                                     string name = "";
                                     for (int i = 4; i < tokens.Length; i++) { name += ((i > 4) ? (" ") : ("")) + tokens[i]; }
-                                    speakers.Add(tokens[1], new Speaker
+                                    speakers[tokens[1]] = new Speaker
                                     {
                                         name = name,
                                         nameColor = GetColorByName(tokens[2]),
                                         textColor = GetColorByName(tokens[3])
-                                    });
+                                    };
                                 }
                                 break;
                             case "BACKGROUND":
@@ -308,6 +321,18 @@ namespace OpenTKBase
                                         speaker = speakers[tokens[1]]
                                     });
                                 }
+                                break;
+                            case "NEXTCUTSCENE":
+                                {
+                                    nextCutscene = tokens[1];
+                                }
+                                break;
+                            case "CHANGEMAP":
+                                cutsceneElems.Add(new CutsceneElem
+                                {
+                                    type = CutsceneElem.Type.ChangeMap,
+                                    textData = (tokens.Length > 1) ? (tokens[1]) : ("")
+                                });
                                 break;
                         }
                     }
@@ -370,6 +395,10 @@ namespace OpenTKBase
                     case CutsceneElem.Type.WaitKey:
                     case CutsceneElem.Type.Talk:
                         return;
+                    case CutsceneElem.Type.ChangeMap:
+                        gameMap.LoadMap(elem.textData);
+                        player.GotoPos('S');                        
+                        break;
                     default:
                         break;
                 }

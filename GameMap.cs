@@ -21,13 +21,24 @@ namespace OpenTKBase
         private Mesh                wallMesh;
         private Material            wallMaterial;
         private Texture             wallTexture;
+        private bool                dirty = true;
 
         public override void Update()
         {
         }
 
         public void LoadMap(string filename)
-        { 
+        {
+            // Clear previous map
+            noteworthyPositions = new List<(int, int)>[256];
+            mapData = null;
+            groundMesh = null;
+            groundTexture = null;
+            groundMaterial = null;
+            wallMesh = null;
+            wallMaterial = null;
+            wallTexture = null;
+
             // Load the actual map
             List<string> textMapData = new List<string>();
             
@@ -48,13 +59,13 @@ namespace OpenTKBase
                             else
                             {
 
-                                if ((c != '.') || (c != ' '))
+                                if ((c != '.') && (c != ' '))
                                 {
                                     if (noteworthyPositions[(uint)c] == null)
                                     {
                                         noteworthyPositions[(uint)c] = new List<(int, int)>();
-                                        noteworthyPositions[(uint)c].Add((i, textMapData.Count));
                                     }
+                                    noteworthyPositions[(uint)c].Add((i, textMapData.Count));
                                 }
                                 tmp += ".";
                             }
@@ -103,6 +114,8 @@ namespace OpenTKBase
 
             Resources.AddTexture("Map", texture);
             Resources.CreateSprite("Map", texture, new Vector2(0.5f, 0.5f), new Vector4(0.0f, 0.0f, 1.0f, 1.0f), 1);
+
+            dirty = true;
         }
 
         public void BuildGeometry()
@@ -258,7 +271,6 @@ namespace OpenTKBase
         {
             return new Vector3(x * tileSizeX - sizeX * tileSizeX * 0.5f, 0.0f, y * tileSizeZ - sizeZ * tileSizeZ * 0.5f);
         }
-
         Vector4 GetGroundUV(int idx)
         {
             if (idx >= 0)
@@ -425,6 +437,11 @@ namespace OpenTKBase
 
         public override void Render(Camera camera, Material material)
         {
+            if (dirty)
+            {
+                BuildGeometry();
+            }
+
             Shader.SetMatrix(Shader.MatrixType.World, transform.localToWorldMatrix);
 
             groundMesh.Render(groundMaterial);

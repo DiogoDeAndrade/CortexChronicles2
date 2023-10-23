@@ -7,7 +7,7 @@ TALK Jax Loud and clear, Cyra... What can I do for you?
 TALK Hacker Got a delivery for you!
 TALK Hacker Go to entry 7B in the Valley to get it, and take it to 3A Uptown!
 TALK Jax Alright, talk you soon!
-CHANGEMAP Data/game_map01.dat
+CHANGEMAP Data/game_map02.dat
 BACKGROUND
 WAITTIME 2
-NEXTCUTSCENE Data/cutscene02.dat
+NEXTCUTSCENE Data/cutscene03.dat

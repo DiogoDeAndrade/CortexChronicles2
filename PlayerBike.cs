@@ -111,5 +111,13 @@ namespace OpenTKBase
                 }
             }
         }        
+
+        public void GotoPos(char c)
+        {
+            var pos = gameMap.GetPosition(c);
+            transform.position = pos;
+            var camera = FindObjectOfType<CameraTrack>();
+            camera.reset = true;
+        }
     }
 }

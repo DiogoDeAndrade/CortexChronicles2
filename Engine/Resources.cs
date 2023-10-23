@@ -34,7 +34,7 @@ namespace OpenTKBase
 
         public static void AddTexture(string textureName, Texture texture)
         {
-            _textures.Add(textureName, texture);
+            _textures[textureName] = texture;
         }
 
         public static void RemoveTexture(string textureName)
@@ -91,7 +91,7 @@ namespace OpenTKBase
                 pixelsPerUnit = pixelsPerUnit
             };
 
-            _sprites.Add(name, sprite);
+            _sprites[name] = sprite;
 
             return sprite;
         }
