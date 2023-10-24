@@ -112,6 +112,8 @@ namespace OpenTKBase
 
         public void DealDamage(float damage)
         {
+            if (health <= 0.0f) return;
+
             health -= damage;
 
             if (health <= 0.0f)

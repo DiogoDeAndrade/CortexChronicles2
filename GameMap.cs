@@ -109,6 +109,19 @@ namespace OpenTKBase
                     srcIndex++;
                 }
             }
+            // Add drones to map
+            var dronePos = noteworthyPositions['x'];
+            if (dronePos != null)
+            {
+                foreach (var drone in dronePos)
+                {
+                    dstIndex = (drone.Item1 + drone.Item2 * sizeX) * 4;
+                    data[dstIndex] = 255;
+                    data[dstIndex + 1] = 0;
+                    data[dstIndex + 2] = 0;
+                    data[dstIndex + 3] = 255;
+                }
+            }
 
             Texture texture = new Texture(TextureWrapMode.Clamp, TextureMinFilter.Nearest, false);
             texture.Load(data, sizeX, sizeZ);
@@ -125,7 +138,6 @@ namespace OpenTKBase
                 }
             }
             drones = new List<Drone>();
-            var dronePos = noteworthyPositions['x'];
             if (dronePos != null)
             {
                 foreach (var drone in dronePos)

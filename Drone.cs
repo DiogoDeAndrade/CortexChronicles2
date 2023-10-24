@@ -108,10 +108,10 @@ namespace OpenTKBase
                     else
                     {
                         shootTimer -= Time.deltaTime;
-                        if (shootTimer <= 0)
+                        if ((shootTimer <= 0) && (player.healthPercentage > 0))
                         {
                             shootTimer = shootCooldown;
-                            //currentShots--;
+                            currentShots--;
                             if (currentShots == 0)
                             {
                                 attackTimer = attackCooldown;
@@ -124,8 +124,7 @@ namespace OpenTKBase
                             explosion.scale = 2.0f;
 
                             float dist = Vector3.Distance(player.transform.position, targetObjectRenderer.transform.position);
-                            Console.WriteLine(dist);
-                            if (dist < 2.0f)
+                            if (dist < 0.5f)
                             {
                                 player.DealDamage(20.0f);
                             }
