@@ -59,6 +59,8 @@ namespace SDLBase
                 Resources.CreateSpriteForPixelArt("Arrow", "Textures/arrow.png", new Vector2(0.5f, 1.0f), new Vector4(0.0f, 0.0f, 1.0f, 1.0f), 1);
                 Resources.CreateSpriteForPixelArt("CircleMarker", "Textures/circle_marker.png", new Vector2(0.5f, 0.5f), new Vector4(0.0f, 0.0f, 1.0f, 1.0f), 1);
 
+                Resources.CreateSpriteForPixelArt("Title", "Textures/title.png", new Vector2(0.5f, 0.5f), new Vector4(0.0f, 0.0f, 1.0f, 1.0f), 1);
+
                 // Create player character
                 GameObject playerCharacter = new GameObject();
                 playerCharacter.transform.position = startPos;
@@ -86,7 +88,8 @@ namespace SDLBase
                 // Create pipeline
                 renderPipeline = new RPCortex();
 
-                ui.PlayCutscene("Data/cutscene01.dat");
+                ui.GotoTitle();
+                //ui.PlayCutscene("Data/cutscene01.dat");
             },
             () =>
             {

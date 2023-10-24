@@ -12,16 +12,16 @@ namespace OpenTKBase
 {
     public class UI : Renderable
     {
-        public enum State { None, Game, Map, Cutscene, GameOver };
+        public enum State { None, Title, Game, Map, Cutscene, GameOver };
 
         public State state = State.Game;
 
-        private Material ssmaterial;
-        private PlayerBike player;
-        private Font font;
-        private GameMap gameMap;
-        private Mesh rectMesh;
-        private Material rectMaterial;
+        private Material    ssmaterial;
+        private PlayerBike  player;
+        private Font        font;
+        private GameMap     gameMap;
+        private Mesh        rectMesh;
+        private Material    rectMaterial;
 
         public override void Start()
         {
@@ -32,6 +32,13 @@ namespace OpenTKBase
 
         public override void Update()
         {
+            if (state == State.Title)
+            {
+                if (Input.GetKeyDown(Keys.Space))
+                {
+                    PlayCutscene("Data/cutscene01.dat");
+                }
+            }
             if (state == State.Game)
             {
                 if (Input.GetKeyDown(Keys.M))
@@ -80,7 +87,11 @@ namespace OpenTKBase
         {
             GL.Disable(EnableCap.DepthTest);
 
-            if (state == State.Game)
+            if (state == State.Title)
+            {
+                RenderTitle();
+            }
+            else if (state == State.Game)
             {
                 RenderGame();
             }
@@ -101,6 +112,28 @@ namespace OpenTKBase
         }
 
         public override int GetOrder() { return 1; }
+
+        public void RenderTitle()
+        {
+            int mx = (int)(OpenTKApp.APP.resX * 0.5f);
+            int my = (int)(OpenTKApp.APP.resY * 0.5f);
+
+            DrawScreenspace(Resources.FindSprite("Title"), mx, my, 10.0f);
+
+            RenderShadowText(mx, 40, 40, 4, "CORTEX CHRONICLES 2", GetColorByName("DARKRED"), Font.Align.CenterX);
+            RenderShadowText(mx, 140, 80, 8, "THE RIDE OF JAX RIVEN", GetColorByName("GREEN"), Font.Align.CenterX);
+
+            RenderShadowText(mx, 900, 40, 4, "CREATED BY DIOGO DE ANDRADE", GetColorByName("CYAN"), Font.Align.CenterX);
+            RenderShadowText(mx, 960, 40, 4, "FOR THE GAME CREATORS CLUB (2023/10)", GetColorByName("DARKCYAN"), Font.Align.CenterX);
+
+            RenderShadowText(mx, my, 40, 4, "PRESS [SPACE] TO START", GetColorByName("YELLOW"), Font.Align.CenterX);
+        }
+
+        public void RenderShadowText(int x, int y, int size, int shadowSize, string text, Color4 color, Font.Align align)
+        {
+            font.RenderSingleMonospace(x + shadowSize, y + shadowSize, size, size, 4, text, Color4.Black, align);
+            font.RenderSingleMonospace(x, y, size, size, 4, text, color, align);
+        }
 
         public void RenderMap()
         {
@@ -222,6 +255,14 @@ namespace OpenTKBase
             });
 
             rectMesh.Render(rectMaterial);
+        }
+
+        public void GotoTitle()
+        {
+            state = State.Title;
+            
+            player = FindObjectOfType<PlayerBike>();
+            player.enable = false;
         }
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
