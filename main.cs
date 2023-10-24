@@ -86,7 +86,7 @@ namespace SDLBase
                 // Create pipeline
                 renderPipeline = new RPCortex();
 
-                ui.PlayCutscene("Data/cutscene03.dat");
+                ui.PlayCutscene("Data/cutscene01.dat");
             },
             () =>
             {

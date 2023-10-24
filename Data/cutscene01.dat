@@ -1,3 +1,12 @@
+BACKGROUND Textures/title.png
+WAITTIME 1
+NARRATE In the near future, in the old tunnels below Cortex City, a whole underworld exists...
+NARRATE In that underworld, the D-Boys exist... Bikers that risk their lives to deliver packages and keep the life of the undercity pumping...
+
+BACKGROUND Textures/cutscene_start.png
+WAITTIME 1
+NARRATE *cell beeps*
+
 DEFSPEAKER Hacker DARKMAGENTA GREY Cyra Vale
 DEFSPEAKER Jax DARKCYAN GREY Jax Riven
 BACKGROUND Textures/cutscene_hacker.png
@@ -8,6 +17,8 @@ TALK Hacker Got a delivery for you!
 TALK Hacker Go to entry 7B in the Valley to get it, and take it to 3A Uptown!
 TALK Jax Alright, talk you soon!
 CHANGEMAP Data/game_map01.dat
+BACKGROUND Textures/cutscene_ride.png
+WAITTIME 2
 BACKGROUND
 WAITTIME 2
 NEXTCUTSCENE Data/cutscene02.dat

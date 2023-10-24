@@ -266,6 +266,7 @@ namespace OpenTKBase
                 while ((line = reader.ReadLine()) != null)
                 {
                     var l = line.Trim();
+                    if (l == "") continue;
                     if (l[0] == '#') continue;
                     var tokens = line.Split(delimiters);
                     if (tokens.Length > 0)
