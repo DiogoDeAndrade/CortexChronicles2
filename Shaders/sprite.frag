@@ -4,6 +4,7 @@ uniform vec2        EnvFogParams;
 uniform vec4        EnvFogColor;
 uniform vec3        ViewPos;
 uniform sampler2D   TextureAlbedo;
+uniform vec4        MaterialColor;
 
 in vec3 fragWorldPos;
 in vec2 fragUV;
@@ -21,6 +22,6 @@ void main()
     if (textureColor.a < 0.005)
         discard;
 
-    FragColor =  mix(textureColor, EnvFogColor, fogFactor);
+    FragColor =  mix(textureColor * MaterialColor, EnvFogColor, fogFactor);
     FragColor.a =  textureColor.a;
 }

@@ -27,6 +27,28 @@ namespace SDLBase
             app.Run(
             () =>
             {
+                // Load resources
+                Resources.LoadFont("Fonts/simple_ascii.png", 5, 7, true, 1, 1, 2, 2);
+                Resources.CreateSpriteForPixelArt("bike", "Textures/motorbike.png", new Vector2(0.5f, 1.0f), new Vector4(0.0f, 0.0f, 1.0f, 1.0f), 90);
+                Resources.CreateSpriteForPixelArt("bike_accel", "Textures/motorbike_accel.png", new Vector2(0.5f, 1.0f), new Vector4(0.0f, 0.0f, 1.0f, 1.0f), 90);
+                Resources.CreateSpriteForPixelArt("bike_break", "Textures/motorbike_break.png", new Vector2(0.5f, 1.0f), new Vector4(0.0f, 0.0f, 1.0f, 1.0f), 90);
+                Resources.CreateSpriteForPixelArt("bike_shadow", "Textures/shadow.png", new Vector2(0.5f, 0.5f), new Vector4(0.0f, 0.0f, 1.0f, 1.0f), 90);
+                Resources.CreateSpriteForPixelArt("dot", "Textures/dot.png", new Vector2(0.5f, 0.5f), new Vector4(0.0f, 0.0f, 1.0f, 1.0f), 90);
+                Resources.CreateSpriteSheetForPixelArt("explosion", "Textures/explosion.png", new Vector2(0.5f, 0.5f), 4, 4, 16, 90);
+                Resources.CreateSpriteForPixelArt("Drone", "Textures/drone.png", new Vector2(0.5f, 0.5f), new Vector4(0.0f, 0.0f, 1.0f, 1.0f), 150);
+                Resources.CreateSpriteForPixelArt("DroneShadow", "Textures/drone_shadow.png", new Vector2(0.5f, 0.5f), new Vector4(0.0f, 0.0f, 1.0f, 1.0f), 90);
+                Resources.CreateSpriteForPixelArt("DroneTarget", "Textures/drone_target.png", new Vector2(0.5f, 0.5f), new Vector4(0.0f, 0.0f, 1.0f, 1.0f), 90);
+
+                Resources.CreateSpriteForPixelArt("GameOver", "Textures/gameover.png", new Vector2(0.5f, 0.5f), new Vector4(0.0f, 0.0f, 1.0f, 1.0f), 90);
+                Resources.CreateSpriteForPixelArt("HealthbarFull", "Textures/health_cell_full.png", new Vector2(0.0f, 0.0f), new Vector4(0.0f, 0.0f, 1.0f, 1.0f), 20);
+                Resources.CreateSpriteForPixelArt("HealthbarEmpty", "Textures/health_cell_empty.png", new Vector2(0.0f, 0.0f), new Vector4(0.0f, 0.0f, 1.0f, 1.0f), 20);
+
+                Resources.CreateSpriteForPixelArt("TransparentBlack", "Textures/transparent_black.png", new Vector2(0.5f, 0.5f), new Vector4(0.0f, 0.0f, 1.0f, 1.0f), 1);
+                Resources.CreateSpriteForPixelArt("Arrow", "Textures/arrow.png", new Vector2(0.5f, 1.0f), new Vector4(0.0f, 0.0f, 1.0f, 1.0f), 1);
+                Resources.CreateSpriteForPixelArt("CircleMarker", "Textures/circle_marker.png", new Vector2(0.5f, 0.5f), new Vector4(0.0f, 0.0f, 1.0f, 1.0f), 1);
+
+                Resources.CreateSpriteForPixelArt("Title", "Textures/title.png", new Vector2(0.5f, 0.5f), new Vector4(0.0f, 0.0f, 1.0f, 1.0f), 1);
+
                 // Create map
                 GameObject gameMapObject = new GameObject();
                 GameMap gameMap = gameMapObject.AddComponent<GameMap>();
@@ -41,25 +63,6 @@ namespace SDLBase
 
                 env.Set("FogParams", new Vector2(0.0f, 80.0f));
                 env.Set("FogColor", Color.Black);
-
-                // Load resources
-                Resources.LoadFont("Fonts/simple_ascii.png", 5, 7, true, 1, 1, 2, 2);
-                Resources.CreateSpriteForPixelArt("bike", "Textures/motorbike.png", new Vector2(0.5f, 1.0f), new Vector4(0.0f, 0.0f, 1.0f, 1.0f), 90);
-                Resources.CreateSpriteForPixelArt("bike_accel", "Textures/motorbike_accel.png", new Vector2(0.5f, 1.0f), new Vector4(0.0f, 0.0f, 1.0f, 1.0f), 90);
-                Resources.CreateSpriteForPixelArt("bike_break", "Textures/motorbike_break.png", new Vector2(0.5f, 1.0f), new Vector4(0.0f, 0.0f, 1.0f, 1.0f), 90);
-                Resources.CreateSpriteForPixelArt("bike_shadow", "Textures/shadow.png", new Vector2(0.5f, 1.0f), new Vector4(0.0f, 0.0f, 1.0f, 1.0f), 90);
-                Resources.CreateSpriteForPixelArt("dot", "Textures/dot.png", new Vector2(0.5f, 0.5f), new Vector4(0.0f, 0.0f, 1.0f, 1.0f), 90);
-                Resources.CreateSpriteSheetForPixelArt("explosion", "Textures/explosion.png", new Vector2(0.5f, 0.5f), 4, 4, 16, 90);
-
-                Resources.CreateSpriteForPixelArt("GameOver", "Textures/gameover.png", new Vector2(0.5f, 0.5f), new Vector4(0.0f, 0.0f, 1.0f, 1.0f), 90);
-                Resources.CreateSpriteForPixelArt("HealthbarFull", "Textures/health_cell_full.png", new Vector2(0.0f, 0.0f), new Vector4(0.0f, 0.0f, 1.0f, 1.0f), 20);
-                Resources.CreateSpriteForPixelArt("HealthbarEmpty", "Textures/health_cell_empty.png", new Vector2(0.0f, 0.0f), new Vector4(0.0f, 0.0f, 1.0f, 1.0f), 20);
-
-                Resources.CreateSpriteForPixelArt("TransparentBlack", "Textures/transparent_black.png", new Vector2(0.5f, 0.5f), new Vector4(0.0f, 0.0f, 1.0f, 1.0f), 1);
-                Resources.CreateSpriteForPixelArt("Arrow", "Textures/arrow.png", new Vector2(0.5f, 1.0f), new Vector4(0.0f, 0.0f, 1.0f, 1.0f), 1);
-                Resources.CreateSpriteForPixelArt("CircleMarker", "Textures/circle_marker.png", new Vector2(0.5f, 0.5f), new Vector4(0.0f, 0.0f, 1.0f, 1.0f), 1);
-
-                Resources.CreateSpriteForPixelArt("Title", "Textures/title.png", new Vector2(0.5f, 0.5f), new Vector4(0.0f, 0.0f, 1.0f, 1.0f), 1);
 
                 // Create player character
                 GameObject playerCharacter = new GameObject();
@@ -79,8 +82,6 @@ namespace SDLBase
                 var track = cameraObject.AddComponent<CameraTrack>();
                 track.player = pb;
                 track.gameMap = gameMap;
-                //FirstPersonController fps = cameraObject.AddComponent<FirstPersonController>();
-                //fps.rotation = new Vector2(0.0f, -MathF.PI / 2.0f);
 
                 GameObject uiObject = new GameObject();
                 var ui = uiObject.AddComponent<UI>();
@@ -88,8 +89,8 @@ namespace SDLBase
                 // Create pipeline
                 renderPipeline = new RPCortex();
 
-                ui.GotoTitle();
-                //ui.PlayCutscene("Data/cutscene01.dat");
+                //ui.GotoTitle();
+                ui.state = UI.State.Game;
             },
             () =>
             {

@@ -139,6 +139,11 @@ namespace OpenTKBase
             SetDirty();
         }
 
+        public void RemoveChild(Transform t)
+        {
+            _children.Remove(t);
+        }
+
         private void UpdateInternals()
         {
             _localMatrix = Matrix4.CreateScale(_localScale) * Matrix4.CreateFromQuaternion(_localRotation) * Matrix4.CreateTranslation(_localPosition);

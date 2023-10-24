@@ -74,6 +74,8 @@ namespace OpenTKBase
                         t.SetParent(null);
                         t.gameObject.Destroy();
                     }
+                    // Remove this object from parent
+                    obj.transform.SetParent(null);
                 }
             }
         }

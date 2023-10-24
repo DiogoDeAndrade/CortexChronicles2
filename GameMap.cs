@@ -22,6 +22,7 @@ namespace OpenTKBase
         private Material            wallMaterial;
         private Texture             wallTexture;
         private bool                dirty = true;
+        private List<Drone>         drones;
 
         public override void Update()
         {
@@ -114,6 +115,28 @@ namespace OpenTKBase
 
             Resources.AddTexture("Map", texture);
             Resources.CreateSprite("Map", texture, new Vector2(0.5f, 0.5f), new Vector4(0.0f, 0.0f, 1.0f, 1.0f), 1);
+
+            // Create drones
+            if (drones != null)
+            {
+                foreach (var drone in drones)
+                {
+                    drone.gameObject.Destroy();
+                }
+            }
+            drones = new List<Drone>();
+            var dronePos = noteworthyPositions['x'];
+            if (dronePos != null)
+            {
+                foreach (var drone in dronePos)
+                {
+                    GameObject droneObject = new GameObject();
+                    droneObject.transform.position = GetCenterPos(drone.Item1, drone.Item2) + Vector3.UnitY * 3.0f;
+                    SpriteRenderer sr = droneObject.AddComponent<SpriteRenderer>();
+                    sr.sprite = Resources.FindSprite("Drone");
+                    droneObject.AddComponent<Drone>();
+                }
+            }
 
             dirty = true;
         }

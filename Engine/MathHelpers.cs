@@ -27,6 +27,17 @@ namespace OpenTKBase
             return new Vector3(v.X, 0.0f, v.Z);
         }
 
+        static public Vector3 MoveTowards(Vector3 current, Vector3 target, float maxDistance)
+        {
+            Vector3 delta = target - current;
+            if (delta.Length < maxDistance)
+            {
+                return target;
+            }
+
+            return current + delta.Normalized() * maxDistance;
+        }
+
         public static Quaternion LookRotation(Vector3 forward, Vector3 up)
         {
             forward = -Vector3.Normalize(forward);

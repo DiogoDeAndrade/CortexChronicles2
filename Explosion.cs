@@ -11,11 +11,12 @@ namespace OpenTKBase
         private float           timer;
         private float           frameTime = 0.1f;
         private int             index;
+        public  float           scale = 8.0f;
         private List<Sprite>    sprites;
 
         public override void Start()
         {
-            transform.localScale = new Vector3(8.0f, 8.0f, 8.0f);
+            transform.localScale = new Vector3(scale, scale, scale);
             spriteRenderer = gameObject.AddComponent<SpriteRenderer>();
             spriteRenderer.sprite = Resources.FindSprite("explosion1");
             spriteRenderer.mode = SpriteRenderer.Mode.Billboard;

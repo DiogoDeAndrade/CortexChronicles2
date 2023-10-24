@@ -20,6 +20,7 @@ namespace OpenTKBase
         public float health;
 
         public float            healthPercentage => health / maxHealth;
+        public float            speed => bikeSpeed.Z / 50.0f;
 
         public override void Start()
         {
@@ -90,23 +91,12 @@ namespace OpenTKBase
                         transform.rotation = MathHelpers.LookRotation(reflectDir, Vector3.UnitY);
 
                         health -= (1.0f - dp) * maxHealth;
+
+                        DealDamage((1.0f - dp) * maxHealth);
                     }
                     else
                     {
-                        health = 0.0f;
-                    }
-
-                    if (health <= 0.0f)
-                    { 
-                        spriteRenderer.enable = false;
-                        this.enable = false;
-                        shadowRenderer.enable = false;
-
-                        GameObject playerExplosion = new GameObject();
-                        playerExplosion.transform.position = transform.position + Vector3.UnitY * 1.5f;
-                        playerExplosion.AddComponent<Explosion>();
-
-                        FindObjectOfType<UI>().state = UI.State.GameOver;
+                        DealDamage(maxHealth);
                     }
                 }
             }
@@ -118,6 +108,24 @@ namespace OpenTKBase
             transform.position = pos;
             var camera = FindObjectOfType<CameraTrack>();
             camera.reset = true;
+        }
+
+        public void DealDamage(float damage)
+        {
+            health -= damage;
+
+            if (health <= 0.0f)
+            {
+                spriteRenderer.enable = false;
+                this.enable = false;
+                shadowRenderer.enable = false;
+
+                GameObject playerExplosion = new GameObject();
+                playerExplosion.transform.position = transform.position + Vector3.UnitY * 1.5f;
+                playerExplosion.AddComponent<Explosion>();
+
+                FindObjectOfType<UI>().state = UI.State.GameOver;
+            }
         }
     }
 }

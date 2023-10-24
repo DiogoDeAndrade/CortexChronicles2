@@ -9,6 +9,7 @@ namespace OpenTKBase
         public Sprite   sprite;
         public Mode     mode = Mode.Billboard;
         public float    rotation;
+        public Color4   color = Color4.White;
 
         public override void Render(Camera camera, Material override_material)
         {
@@ -17,7 +18,9 @@ namespace OpenTKBase
             Shader.SetMatrix(Shader.MatrixType.World, transform.localToWorldMatrix);
 
             activeMaterial.Set("SpriteRotation", rotation * MathF.PI / 180.0f);
-            
+            activeMaterial.Set("Color", color);
+
+
             if ((camera != null) && (mode != Mode.World))
             {
                 if (mode == Mode.Billboard)
