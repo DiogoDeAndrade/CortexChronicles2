@@ -228,14 +228,14 @@ namespace OpenTKBase
         // CUTSCENE STUFF
         struct CutsceneElem
         {
-            public enum Type { Background, WaitTime, WaitKey, Talk, ChangeMap };
+            public enum Type { Background, WaitTime, WaitKey, Talk, ChangeMap, Quit };
 
             public Type     type;
             public string   textData;
             public float    floatData;
             public Speaker  speaker;
         }
-        struct Speaker
+        class Speaker
         {
             public string name;
             public Color4 nameColor;
@@ -313,12 +313,24 @@ namespace OpenTKBase
                             case "TALK":
                                 {
                                     string text = "";
-                                    for (int i = 2; i < tokens.Length; i++) { text += ((i > 2)?(" "):("")) + tokens[i]; }
+                                    for (int i = 2; i < tokens.Length; i++) { text += ((i > 2) ? (" ") : ("")) + tokens[i]; }
                                     cutsceneElems.Add(new CutsceneElem
                                     {
                                         type = CutsceneElem.Type.Talk,
                                         textData = text,
                                         speaker = speakers[tokens[1]]
+                                    });
+                                }
+                                break;
+                            case "NARRATE":
+                                {
+                                    string text = "";
+                                    for (int i = 1; i < tokens.Length; i++) { text += ((i > 1) ? (" ") : ("")) + tokens[i]; }
+                                    cutsceneElems.Add(new CutsceneElem
+                                    {
+                                        type = CutsceneElem.Type.Talk,
+                                        textData = text,
+                                        speaker = null
                                     });
                                 }
                                 break;
@@ -332,6 +344,12 @@ namespace OpenTKBase
                                 {
                                     type = CutsceneElem.Type.ChangeMap,
                                     textData = (tokens.Length > 1) ? (tokens[1]) : ("")
+                                });
+                                break;
+                            case "ENDGAME":
+                                cutsceneElems.Add(new CutsceneElem
+                                {
+                                    type = CutsceneElem.Type.Quit,
                                 });
                                 break;
                         }
@@ -399,6 +417,9 @@ namespace OpenTKBase
                         gameMap.LoadMap(elem.textData);
                         player.GotoPos('S');                        
                         break;
+                    case CutsceneElem.Type.Quit:
+                        OpenTKApp.APP.Quit();
+                        return;
                     default:
                         break;
                 }
@@ -417,36 +438,36 @@ namespace OpenTKBase
             int my = (int)(OpenTKApp.APP.resY * 0.5f);
 
             var sprite = Resources.FindSprite("BackSprite");
-            if (sprite == null)
-            {
-                //DrawScreenspace(Resources.FindSprite("TransparentBlack"), mx, my, 100.0f);
-            }
-            else
+            if (sprite != null)
             {
                 DrawScreenspace(sprite, mx, my, 6.0f);
+            }
 
-                if (cutsceneIndex < cutsceneElems.Count)
+            if (cutsceneIndex < cutsceneElems.Count)
+            {
+                var elem = cutsceneElems[cutsceneIndex];
+                if (elem.type == CutsceneElem.Type.Talk)
                 {
-                    var elem = cutsceneElems[cutsceneIndex];
-                    if (elem.type == CutsceneElem.Type.Talk)
+                    int x1 = 50;
+                    int y1 = 600;
+                    int x2 = 1920 - x1;
+                    int y2 = 1000;
+                    int border = 2;
+                    var nameColor = (elem.speaker != null)?(elem.speaker.nameColor):(GetColorByName("WHITE"));
+                    nameColor.A = 128;
+                    var textColor = (elem.speaker != null) ? (elem.speaker.textColor) : (GetColorByName("GREY"));
+                    DrawRect(x1, y1, x2, y1 + border, nameColor);
+                    DrawRect(x1, y1, x1 + border, y2, nameColor);
+                    DrawRect(x2 - border, y1, x2, y2, nameColor);
+                    DrawRect(x1, y2 - border, x2, y2, nameColor);
+                    DrawRect(x1 + border, y1 + border, x2 - border, y2 - border, new Color4(0.0f, 0.0f, 0.0f, 0.80f));
+
+                    if (elem.speaker != null)
                     {
-                        int x1 = 50;
-                        int y1 = 600;
-                        int x2 = 1920 - x1;
-                        int y2 = 1000;
-                        int border = 2;
-                        var color = elem.speaker.nameColor;
-                        color.A = 128;
-                        DrawRect(x1, y1, x2, y1 + border, color);
-                        DrawRect(x1, y1, x1 + border, y2, color);
-                        DrawRect(x2 - border, y1, x2, y2, color);
-                        DrawRect(x1, y2 - border, x2, y2, color);
-                        DrawRect(x1 + border, y1 + border, x2 - border, y2 - border, new Color4(0.0f, 0.0f, 0.0f, 0.80f));
-
                         font.RenderSingleMonospace(x1 + border + 20, y1 + border + 15, 50, 50, 4, elem.speaker.name, elem.speaker.nameColor, Font.Align.Left);
-
-                        font.RenderMonospace(x1 + border + 20, y1 + border + 120, x2 - x1 - (border + 20) * 2, 36, 36, 4, 20, elem.textData, elem.speaker.textColor, Font.Align.Left);
                     }
+
+                    font.RenderMonospace(x1 + border + 20, y1 + border + 120, x2 - x1 - (border + 20) * 2, 36, 36, 4, 20, elem.textData, textColor, Font.Align.Left);
                 }
             }
         }

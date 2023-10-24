@@ -1,0 +1,32 @@
+DEFSPEAKER Stranger DARKYELLOW YELLOW Stranger
+DEFSPEAKER Jax DARKCYAN GREY Jax Riven
+DEFSPEAKER Hacker DARKMAGENTA GREY Cyra Vale
+BACKGROUND Textures/cutscene_safehouse.png
+WAITTIME 1
+NARRATE *some days later*
+WAITTIME 1
+BACKGROUND Textures/cutscene_couch.png
+WAITTIME 1
+TALK Jax *reading manifesto*
+NARRATE *cell beeps*
+BACKGROUND Textures/cutscene_hacker.png
+TALK Hacker How you doing, Jax?
+TALK Jax Going crazy, Cyra... Tell me you have good news for me, please!
+TALK Hacker Depends on your definition of good news... 
+TALK Hacker I may have a job for you...
+BACKGROUND Textures/cutscene_talk.png
+TALK Jax A job? Shouldn't I be laying low?
+TALK Hacker Well... yeah... but you've been excited about the book, so I was thinking...
+TALK Jax ...yeah?....
+TALK Hacker How'd you like to help?
+TALK Jax Help?
+TALK Hacker The cause... Rowan, the author of that book...
+TALK Jax ...
+TALK Hacker Jax?...
+TALK Jax I'm here... send me the deets...
+TALK Hacker Good... This is a mission outside, we're helping Rowan escape...
+BACKGROUND Textures/cutscene_end.png
+WAITTIME 2
+NARRATE THE END
+WAITTIME 2
+ENDGAME

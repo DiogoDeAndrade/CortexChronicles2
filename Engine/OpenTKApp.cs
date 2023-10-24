@@ -240,6 +240,11 @@ namespace OpenTKBase
             window.SwapBuffers();
         }
 
+        public void Quit()
+        {
+            window.Close();
+        }
+
         private static void OnDebugMessage(
             DebugSource source,     // Source of the debugging message.
             DebugType type,         // Type of the debugging message.
@@ -277,13 +282,12 @@ namespace OpenTKBase
                 switch (op)
                 {
                     case GfxOp.DeleteVbo:
-                        Console.WriteLine("Destroy VBO = " + handle);
-
+                        //Console.WriteLine("Destroy VBO = " + handle);
                         GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
                         GL.DeleteBuffer(handle);
                         break;
                     case GfxOp.DeleteIbo:
-                        Console.WriteLine("Destroy IBO = " + handle);
+                        //Console.WriteLine("Destroy IBO = " + handle);
                         GL.BindBuffer(BufferTarget.ElementArrayBuffer, 0);
                         GL.DeleteBuffer(handle);
                         break;

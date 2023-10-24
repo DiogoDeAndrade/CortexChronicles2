@@ -1,0 +1,35 @@
+DEFSPEAKER Stranger DARKYELLOW YELLOW Stranger
+DEFSPEAKER Jax DARKCYAN GREY Jax Riven
+DEFSPEAKER Hacker DARKMAGENTA GREY Cyra Vale
+BACKGROUND Textures/cutscene_delivery.png
+WAITTIME 1
+TALK Jax Got something for you...
+NARRATE *man opens parcel*
+TALK Stranger Are you crazy?! You bring this here!
+TALK Jax Hey, corpo, I don't ask questions, I don't know what this is, I don't care...
+TALK Jax I get paid to deliver, that's it!
+TALK Stranger *muttering* with all the shit that's going around...
+TALK Jax What shit?
+TALK Stranger The trial! Nevermind, just take this and go away!
+TALK Stranger *Walks away fast*
+WAITTIME 1
+BACKGROUND Textures/cutscene_delivery2.png
+WAITTIME 1
+TALK Jax *dial Cyra*
+TALK Hacker Jax?
+TALK Jax Shit, Cyra, what happened? I delivered the package and the man freaked!
+TALK Jax Kept talking about a trial!
+BACKGROUND Textures/cutscene_hacker.png
+TALK Hacker Trial? The only trial going around is that revolucionary's trial, a guy named Rowan...
+TALK Jax What's that about?
+TALK Hacker Something about a manifesto and treason...
+TALK Jax Ooops, not good... The guy just left me with a book...
+TALK Hacker Ah, shit, Cortex may be looking for that, that explains all the activity around...
+TALK Jax Should I leave it here? Burn it?
+TALK Hacker I don't think it matters, Jax... If that's what I think it is, they'll be searching for it anyway!
+TALK Hacker Be careful! Go lay low at my place downtown...
+TALK Jax Reading you loud and clear...
+CHANGEMAP Data/game_map03.dat
+BACKGROUND
+WAITTIME 2
+NEXTCUTSCENE Data/cutscene04.dat

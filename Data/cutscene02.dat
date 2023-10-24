@@ -1,12 +1,15 @@
-DEFSPEAKER Hacker DARKMAGENTA GREY Cyra Vale
-DEFSPEAKER Jax BLUE GREY Jax Riven
-BACKGROUND Textures/cutscene_hacker.png
+DEFSPEAKER Client DARKGREEN GREEN Client
+DEFSPEAKER Jax DARKCYAN GREY Jax Riven
+BACKGROUND Textures/cutscene_door.png
 WAITTIME 1
-TALK Hacker You read me, Jax?
-TALK Jax Loud and clear, Cyra... What can I do for you?
-TALK Hacker Got a delivery for you!
-TALK Hacker Go to entry 7B in the Valley to get it, and take it to 3A Uptown!
-TALK Jax Alright, talk you soon!
+TALK Jax *knock*
+NARRATE *door opens*
+TALK Client Here you go...
+TALK Client Be careful, this is hot stuff...
+TALK Jax Yeah, yeah, the D-Boys are used to this...
+TALK Client Alright then... you know where to deliver it?
+TALK Jax Aye, 3A Uptown...
+TALK Client Right then, hurry up...
 CHANGEMAP Data/game_map02.dat
 BACKGROUND
 WAITTIME 2
