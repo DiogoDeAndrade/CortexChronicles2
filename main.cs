@@ -89,8 +89,7 @@ namespace SDLBase
                 // Create pipeline
                 renderPipeline = new RPCortex();
 
-                //ui.GotoTitle();
-                ui.state = UI.State.Game;
+                ui.GotoTitle();
             },
             () =>
             {

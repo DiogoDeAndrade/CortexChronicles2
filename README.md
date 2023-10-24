@@ -12,7 +12,7 @@ This is a part of what I hope will be "The Cortex Chronicles" - I want all the g
 I also want to use a different engine on every entry, so let's see how that goes! :)
 
 The game is a racing game that takes place inside the tunnels below the main city in the game world, in which we play as a D-Boy, a sort of futuristic delivery boy that gets caught in the events of the previous game.
-Unfortunately, due to time restrictions, there's almost no gameplay except driving around, it's almost a stupid graphic novel. Maybe one day I'll be able to add some enemies and such in the game.
+Unfortunately, due to time restrictions, there's almost no gameplay except driving around and avoiding drones.
 
 ![TitleImage](Screenshots/screen02.png)
 

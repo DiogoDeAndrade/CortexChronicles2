@@ -108,6 +108,8 @@ namespace OpenTKBase
             transform.position = pos;
             var camera = FindObjectOfType<CameraTrack>();
             camera.reset = true;
+
+            transform.rotation = Quaternion.FromEulerAngles(0.0f, -MathF.PI / 2.0f, 0.0f);
         }
 
         public void DealDamage(float damage)

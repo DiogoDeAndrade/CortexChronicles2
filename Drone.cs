@@ -28,8 +28,12 @@ namespace OpenTKBase
         private int             currentShots;
         private Vector3         startPosition;
 
+        static private int      droneId = 0;
+        private int             droneVariance;
+
         public override void Start()
         {
+            droneVariance = droneId++;
             spriteRenderer = GetComponent<SpriteRenderer>();
             spriteRenderer.mode = SpriteRenderer.Mode.Billboard;
 
@@ -60,7 +64,7 @@ namespace OpenTKBase
             if (state == State.Idle)
             {
                 var pos = transform.position;
-                pos.Y = baseY + 1.0f * MathF.Sin(Time.time * 2.0f);
+                pos.Y = baseY + 1.0f * MathF.Sin((Time.time + droneVariance) * 2.0f);
 
                 transform.position = pos;
 
@@ -85,7 +89,7 @@ namespace OpenTKBase
                 // Losing ground
                 targetPos -= player.transform.forward * distanceToTarget;
                 // Just some animation
-                targetPos += player.transform.right * 2.0f * MathF.Sin(Time.time * 1.5f);
+                targetPos += player.transform.right * 2.0f * MathF.Sin((Time.time + droneVariance) * 1.5f);
 
                 Vector3 currentPos = transform.position;
 
@@ -98,7 +102,7 @@ namespace OpenTKBase
                     {
                         targetObjectRenderer.enable = true;
                         targetObjectRenderer.color = Color4.Yellow;
-                        lockPos = 1.0f * MathF.Sin(Time.time * 1.0f);
+                        lockPos = 1.0f * MathF.Sin((Time.time + droneVariance) * 1.0f);
                         targetObjectRenderer.transform.position = player.transform.position + player.transform.right * lockPos + Vector3.UnitY * 0.2f;
 
                         lockTimer += Time.deltaTime;
